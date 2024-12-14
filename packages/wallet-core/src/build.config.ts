@@ -44,6 +44,7 @@ const config: WalletCoreConfig = {
     mainnet: [
       'BTC',
       'ETH',
+      'VRSC',
       'DAI',
       'USDC',
       'USDT',
@@ -80,6 +81,7 @@ const config: WalletCoreConfig = {
     testnet: [
       'BTC',
       'ETH',
+      'VRSC',
       'DAI',
       'RBTC',
       'BNB',

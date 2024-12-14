@@ -92,4 +92,11 @@ export const ACCOUNT_TYPE_OPTIONS = [
     chain: ChainId.Bitcoin,
     blockchain: 'Bitcoin Blockchain',
   },
+  {
+    name: 'VRSC',
+    label: 'VRSC',
+    type: 'verus_imported',
+    chain: ChainId.Verus,
+    blockchain: 'Verus Blockchain',
+  },
 ];

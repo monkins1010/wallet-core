@@ -1,4 +1,5 @@
 import { BitcoinNetworks } from '@chainify/bitcoin';
+import { VerusNetworks } from '@chainify/verus';
 import { NearNetworks } from '@chainify/near';
 import { SolanaNetworks } from '@chainify/solana';
 import { TerraNetworks } from '@chainify/terra';
@@ -15,6 +16,11 @@ export const ChainNetworks: ChainNetworksType = {
   [ChainId.Bitcoin]: {
     testnet: BitcoinNetworks.bitcoin_testnet,
     mainnet: BitcoinNetworks.bitcoin,
+  },
+
+  [ChainId.Verus]: {
+    testnet: VerusNetworks.verus_testnet,
+    mainnet: VerusNetworks.verus,
   },
 
   [ChainId.Near]: {

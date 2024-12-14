@@ -21,6 +21,7 @@ export enum ChainId {
   Terra = 'terra',
   Avalanche = 'avalanche',
   Optimism = 'optimism',
+  Verus = 'verus',
 }
 
 export type AssetMap = Record<string, IAsset>;

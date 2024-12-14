@@ -7,6 +7,7 @@ import {
   BitcoinTypes,
 } from '@chainify/bitcoin';
 import { BitcoinLedgerProvider, CreateBitcoinLedgerApp } from '@chainify/bitcoin-ledger';
+import { VerusEsploraApiProvider, VerusHDWalletProvider, VerusTypes } from '@chainify/verus';
 import { ChainifyNetwork } from '../../types';
 import { NearChainProvider, NearSwapProvider, NearTypes, NearWalletProvider } from '@chainify/near';
 import { SolanaChainProvider, SolanaNftProvider, SolanaWalletProvider } from '@chainify/solana';
@@ -118,4 +119,27 @@ export function createSolanaClient(
   const nftProvider = new SolanaNftProvider(walletProvider as any);
 
   return new Client(chainProvider as any, walletProvider as any).connect(nftProvider);
+}
+
+export function createVerusClient(
+  settings: ClientSettings<ChainifyNetwork>,
+  mnemonic: string,
+  accountInfo: AccountInfo
+): Client<Chain<any, Network>, Wallet<any, any>, Swap<any, any, Wallet<any, any>>> {
+  const { chainifyNetwork } = settings;
+  const chainProvider = new VerusEsploraApiProvider({
+    batchUrl: chainifyNetwork.batchScraperUrl!,
+    url: chainifyNetwork.scraperUrl!,
+    network: chainifyNetwork as VerusTypes.VerusNetwork,
+    numberOfBlockConfirmation: 2,
+  });
+
+  const walletOptions = {
+    network: chainifyNetwork as VerusTypes.VerusNetwork,
+    baseDerivationPath: accountInfo.derivationPath,
+    mnemonic,
+  };
+  const walletProvider = new VerusHDWalletProvider(walletOptions, chainProvider);
+
+  return new Client(chainProvider as any, walletProvider as any);
 }

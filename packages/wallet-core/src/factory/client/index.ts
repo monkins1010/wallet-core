@@ -1,12 +1,13 @@
 import { ChainId, getChain } from '@liquality/cryptoassets';
 import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
 import { AccountInfo, ClientSettings } from '../../store/types';
-import { createBtcClient, createNearClient, createSolanaClient, createTerraClient } from './clients';
+import { createBtcClient, createNearClient, createSolanaClient, createTerraClient, createVerusClient } from './clients';
 import { createEvmClient } from './evm';
 import { Network as ChainifyNetwork } from '@chainify/types';
 import { NearTypes } from '@chainify/near';
 import { TerraTypes } from '@chainify/terra';
 import { BitcoinTypes } from '@chainify/bitcoin';
+import { VerusTypes } from '@chainify/verus';
 
 export const createClient = ({
   chainId,
@@ -37,6 +38,9 @@ export const createClient = ({
         break;
       case ChainId.Solana:
         client = createSolanaClient(settings, mnemonic, accountInfo);
+        break;
+      case ChainId.Verus:
+        client = createVerusClient(settings as ClientSettings<VerusTypes.VerusNetwork>, mnemonic, accountInfo);
         break;
       default:
         throw createInternalError(CUSTOM_ERRORS.NotFound.Client(chainId));
