@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { IAsset } from './interfaces/IAsset';
+import base58 from 'bs58';
 
 /**
  * Appends 0x if missing from hex string
@@ -23,4 +24,8 @@ export function unitToCurrency(asset: IAsset, value: number | BigNumber): BigNum
 export function currencyToUnit(asset: IAsset, value: number | BigNumber): BigNumber {
   const multiplier = new BigNumber(10).pow(asset.decimals);
   return new BigNumber(value).times(multiplier);
+}
+
+export const isValidVerusAddress = (address: string): boolean => {
+  return base58.decode(address).length === 21
 }

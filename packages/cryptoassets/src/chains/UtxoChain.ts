@@ -1,4 +1,5 @@
 import validateBitcoinAddress from 'bitcoin-address-validation';
+import { isValidVerusAddress } from '../utils';
 import { ensure0x } from '../utils';
 import { BaseChain } from './BaseChain';
 
@@ -20,5 +21,12 @@ export class BitcoinChain extends UtxoChain {
   public isValidAddress(address: string): boolean {
     // networkId = mainnet | testnet | regtest
     return !!validateBitcoinAddress(address, String(this.network.networkId));
+  }
+}
+
+export class VerusChain extends UtxoChain {
+  public isValidAddress(address: string): boolean {
+    // networkId = mainnet | testnet | regtest
+    return !!isValidVerusAddress(address);
   }
 }

@@ -130,15 +130,7 @@ const config: WalletCoreConfig = {
         type: SwapProviderType.FastBTCWithdraw,
         network: Network.Testnet,
         routerAddress: '0x10C848e9495a32acA95F6c23C92eCA2b2bE9903A',
-      },
-      [SwapProviderType.TeleSwap]: {
-        name: 'TeleSwap',
-        icon: 'teleswap.png',
-        type: SwapProviderType.TeleSwap,
-        network: Network.Testnet,
-        QuickSwapRouterAddress: '0x8954AfA98594b838bda56FE4C12a09D7739D179b',
-        QuickSwapFactoryAddress: '0x5757371414417b8c6caad45baef941abc7d3ab32',
-      },
+      }
     },
     mainnet: {
       [SwapProviderType.UniswapV2]: {
@@ -240,14 +232,6 @@ const config: WalletCoreConfig = {
         icon: 'lifi.svg',
         type: SwapProviderType.LiFi,
         apiURL: 'https://li.quest/v1/',
-      },
-      [SwapProviderType.TeleSwap]: {
-        name: 'TeleSwap',
-        icon: 'teleswap.png',
-        type: SwapProviderType.TeleSwap,
-        network: Network.Mainnet,
-        QuickSwapRouterAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
-        QuickSwapFactoryAddress: '0x5757371414417b8c6caad45baef941abc7d3ab32',
       },
     },
   },

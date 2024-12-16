@@ -14,7 +14,6 @@ import sovrynInfo from './sovryn/info.json';
 import thorchainInfo from './thorchain/info.json';
 import uniswapInfo from './uniswap/info.json';
 import debridgeInfo from './debridge/info.json';
-import teleswapInfo from './teleswap/info.json';
 import { LiqualitySwapProvider } from './liquality/LiqualitySwapProvider';
 import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
 
@@ -32,8 +31,7 @@ const swapProviderInfo = {
   [SwapProviderType.Hop]: hopInfo,
   [SwapProviderType.Jupiter]: jupiterInfo,
   [SwapProviderType.DeBridge]: debridgeInfo,
-  [SwapProviderType.LiFi]: lifiInfo,
-  [SwapProviderType.TeleSwap]: teleswapInfo,
+  [SwapProviderType.LiFi]: lifiInfo
 };
 
 function getSwapProviderConfig(network: Network, providerId: SwapProviderType) {
