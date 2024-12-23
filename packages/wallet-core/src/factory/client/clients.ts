@@ -7,7 +7,7 @@ import {
   BitcoinTypes,
 } from '@chainify/bitcoin';
 import { BitcoinLedgerProvider, CreateBitcoinLedgerApp } from '@chainify/bitcoin-ledger';
-import { VerusEsploraApiProvider, VerusHDWalletProvider, VerusTypes } from '@chainify/verus';
+import { VerusJsonRpcProvider, VerusHDWalletProvider, VerusTypes } from '@chainify/verus';
 import { ChainifyNetwork } from '../../types';
 import { NearChainProvider, NearSwapProvider, NearTypes, NearWalletProvider } from '@chainify/near';
 import { SolanaChainProvider, SolanaNftProvider, SolanaWalletProvider } from '@chainify/solana';
@@ -127,11 +127,9 @@ export function createVerusClient(
   accountInfo: AccountInfo
 ): Client<Chain<any, Network>, Wallet<any, any>, Swap<any, any, Wallet<any, any>>> {
   const { chainifyNetwork } = settings;
-  const chainProvider = new VerusEsploraApiProvider({
-    batchUrl: chainifyNetwork.batchScraperUrl!,
-    url: chainifyNetwork.scraperUrl!,
-    network: chainifyNetwork as VerusTypes.VerusNetwork,
-    numberOfBlockConfirmation: 2,
+  const chainProvider = new VerusJsonRpcProvider({
+    uri: chainifyNetwork.rpcUrl as string,
+    network: chainifyNetwork as VerusTypes.VerusNetwork
   });
 
   const walletOptions = {

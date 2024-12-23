@@ -73,6 +73,6 @@
     "@ledgerhq/cryptoassets": "7.3.0",
     "@ledgerhq/hw-app-eth": "6.30.5",
     "@ledgerhq/hw-app-btc": "9.1.2",
-    "@liquality/cryptoassets": "portal:/c:/dev/cryptoassets"
+    "@chainify/verus": "file:/i:/builds/verus"
   }
 }

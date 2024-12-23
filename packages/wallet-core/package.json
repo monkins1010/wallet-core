@@ -24,7 +24,7 @@
     "@chainify/terra": "2.2.0",
     "@chainify/types": "2.3.0",
     "@chainify/utils": "2.3.0",
-    "@chainify/verus": "portal:c:/dev/chainify/packages/verus",
+    "@chainify/verus": "file:/i:/builds/verus",
     "@eth-optimism/sdk": "1.1.5",
     "@ethersproject/abstract-provider": "5.7.0",
     "@ethersproject/abstract-signer": "5.7.0",
