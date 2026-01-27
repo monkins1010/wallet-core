@@ -11,8 +11,8 @@
     "dist/**"
   ],
   "dependencies": {
-    "@chainify/client": "portal:c:/dev/liquality/chainify/packages/client",
-    "@chainify/errors": "portal:c:/dev/liquality/chainify/packages/errors",
+    "@chainify/client": "link:c:/dev/liquality/chainify/packages/client",
+    "@chainify/errors": "link:c:/dev/liquality/chainify/packages/errors",
     "@liquality/cryptoassets": "workspace:*",
     "randombytes": "^2.1.0"
   },
