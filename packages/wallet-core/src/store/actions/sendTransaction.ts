@@ -1,5 +1,5 @@
 import { getChain } from '@liquality/cryptoassets';
-import BN, { BigNumber } from 'bignumber.js';
+import BN from 'bignumber.js';
 import { v4 as uuidv4 } from 'uuid';
 import { ActionContext, rootActionContext } from '..';
 import { assetsAdapter } from '../../utils/chainify';
@@ -27,7 +27,7 @@ export const sendTransaction = async (
     accountId: AccountId;
     asset: Asset;
     to: Asset;
-    amount: BigNumber;
+    amount: BN;
     data: string;
     fee: number;
     feeAsset: string;
