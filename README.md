@@ -8,6 +8,26 @@
 |__/|__/\__,_/_/_/\___/\__/   \____/\____/_/   \___/ 
 </pre>
 
+## Verus Fork
+
+This is a fork of Wallet Core that adds support for **Verus Coin (VRSC)**.
+
+### Build Fixes Applied (Jan 2026)
+
+The following path fixes were applied to enable local development:
+
+1. **package.json** - Changed `@chainify/verus` resolution to use local chainify package
+2. **packages/wallet-core/package.json** - Changed all `@chainify/*` dependencies to use local portal paths
+3. **packages/error-parser/package.json** - Changed `@chainify/client` and `@chainify/errors` to local paths
+
+### Local Development Setup
+
+This package depends on local builds of:
+- `c:/dev/liquality/chainify` - The chainify monorepo (must be built first)
+- `c:/dev/liquality/cryptoassets` - The cryptoassets package
+
+---
+
 ![](https://img.shields.io/npm/v/@liquality/wallet-core?label=wallet-core)
 ![master](https://github.com/liquality/wallet-core/actions/workflows/build-test.yml/badge.svg?branch=master)
 
