@@ -1,7 +1,0 @@
-dist
-.turbo
-node_modules
-coverage
-typechain
-.changeset
-.nyc_output

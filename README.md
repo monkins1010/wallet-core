@@ -8,32 +8,10 @@
 |__/|__/\__,_/_/_/\___/\__/   \____/\____/_/   \___/ 
 </pre>
 
-## Verus Fork
-
-This is a fork of Wallet Core that adds support for **Verus Coin (VRSC)**.
-
-### Build Fixes Applied (Jan 2026)
-
-The following path fixes were applied to enable local development:
-
-1. **package.json** - Changed `@chainify/verus` resolution to use local chainify package
-2. **packages/wallet-core/package.json** - Changed all `@chainify/*` dependencies to use local portal paths
-3. **packages/error-parser/package.json** - Changed `@chainify/client` and `@chainify/errors` to local paths
-
-### Local Development Setup
-
-This package depends on local builds of:
-- `c:/dev/liquality/chainify` - The chainify monorepo (must be built first)
-- `c:/dev/liquality/cryptoassets` - The cryptoassets package
-
----
-
 ![](https://img.shields.io/npm/v/@liquality/wallet-core?label=wallet-core)
 ![master](https://github.com/liquality/wallet-core/actions/workflows/build-test.yml/badge.svg?branch=master)
 
-Wallet Core is a cryptocurrency wallet library in Typescript. It provides an abstracted interface that handles all the necessary internals of a muilti chain wallet.
-
-# Features
+Wallet Core is a cryptocurrency wallet library in Typescript. It provides an abstracted interface that handles all the necessary internals of a muilti chain wallet. Featuring:
 
 - State management
 - Seed management and security
@@ -105,3 +83,81 @@ Integration tests are written in [Jest](https://jestjs.io/).
 ```angular2html
 yarn test
 ```
+
+## How to Contribute
+
+### Swap Providers
+
+**To add a new swap provider, you should clone this repo first and then use the develop branch as a base.**
+
+1. Add the New Swap Provider type: https://github.com/liquality/wallet-core/blob/develop/packages/wallet-core/src/store/types.ts
+
+2. Add the config or settings that you need inside the [build.config](https://github.com/liquality/wallet-core/blob/develop/packages/wallet-core/src/build.config.ts) file using the new type added in `SwapProviderType` enum, this should be inside the field `swapProviders` and then you can add different settings for `testnet` and `mainnet`. For example, if your swap provider will need to make some http calls and if you want to set the root url for it.
+
+3. Create a new folder for your new provider inside `packages/wallet-core/src/swaps`, then add a new file named `info.json` whith a content like (you can check the other providers to get an example):
+
+```
+{
+  "title": "Your title",
+  "description": "Your description",
+  "pros": [
+    "Ethereum, Polygon, Binance Smart Chain, Avalanche",
+    "Best exchange rates",
+    "High liquidity",
+    "Many pairs",
+    "Fast"
+  ],
+  "cons": ["Slippage"],
+  "fees": ["Additional aggregator fees", "Slippage (up to 0.6% in Liquality)"]
+}
+
+```
+
+4. Add the swap provider info for your new provider, editing the file [/packages/wallet-core/src/swaps/utils.ts](https://github.com/liquality/wallet-core/blob/develop/packages/wallet-core/src/swaps/utils.ts).
+
+- You should import the json file first `import yourProviderInfo from '../swaps/YOUR_PROVIDER/info.json';`
+- Then add it to the `swapProviderInfo` variable
+
+This will add metadata/info for your new provider to the available providers info/details.
+
+5. Create a new file for your new provider inside `packages/wallet-core/src/swaps/YOUR_PROVIDER`. You can create any separated clases or files if you need. Please check the folder `packages/wallet-core/src/swaps/` and the other providers to get an example.
+
+6. Implement the provider: your new provider should extend the class [SwapProvider](https://github.com/liquality/wallet-core/blob/develop/packages/wallet-core/src/swaps/SwapProvider.ts), it is an abtract class so you should implement at least these methods:
+
+- \_getStatuses(): Record<string, SwapStatus>;
+- \_txTypes(): Record<string, string | null>;
+- \_fromTxType(): string | null;
+- \_toTxType(): string | null; // replace with Enum
+- \_totalSteps(): number;
+- \_timelineDiagramSteps(): string[];
+
+- getSupportedPairs({ network }: { network: Network }): Promise<PairData[]>;
+
+- getMin(quoteRequest: QuoteRequest): Promise<BigNumber>;
+
+- getQuote(quoteRequest: QuoteRequest): Promise<GetQuoteResult | null>;
+
+- newSwap(swapRequest: SwapRequest): Promise<Partial<SwapHistoryItem>>;
+
+- estimateFees(estimateFeeRequest: EstimateFeeRequest): Promise<EstimateFeeResponse | null>;
+
+- performNextSwapAction(
+  store: ActionContext,
+  nextSwapAction: NextSwapActionRequest
+  ): Promise<Partial<SwapHistoryItem> | undefined>;
+
+- waitForSwapConfirmations(
+  \_nextSwapActionRequest: NextSwapActionRequest
+  ): Promise<ActionStatus | undefined> {
+  return;
+  }
+
+7. Add the new provider to the list of providers [/packages/wallet-core/src/factory/swap/index.ts]https://github.com/liquality/wallet-core/blob/develop/packages/wallet-core/src/factory/swap/index.ts) and map it with the `SwapProviderType` enum. This will add the provider to the available providers when the user wants to swap.
+
+8. Test using the local wallet environment:
+
+- Clone the wallet repo and use the develop branch [https://github.com/liquality/wallet](https://github.com/liquality/wallet)
+- Select the node version using nvm and install all dependencies. Run `nvm use && yarn`
+- Link your local wallet-core package. Run `yarn link ../wallet-core --all`.
+- Open the package.json file and replace the `portal` protocol inside the `resolutions` field at the end of the file, to use `link` (instead of `portal:...`, should be `link:`) then run `yarn`
+- To run the wallet just run `yarn dev`
