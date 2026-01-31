@@ -1,1 +1,1 @@
-export { AxiosRequestConfig } from 'axios';
+export type { AxiosRequestConfig } from 'axios';

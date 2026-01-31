@@ -1,5 +1,5 @@
-import { ChainId, getChain } from '@liquality/cryptoassets';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
+import { ChainId, getChain } from '../../modules/cryptoassets';
+import { CUSTOM_ERRORS, createInternalError } from '../../modules/error-parser';
 import { v4 as uuidv4 } from 'uuid';
 import { Account, AccountDefinition, Network, WalletId } from '../store/types';
 import { getDerivationPath } from './derivationPath';

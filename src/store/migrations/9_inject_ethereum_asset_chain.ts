@@ -1,4 +1,4 @@
-import { ChainId, getAsset } from '@liquality/cryptoassets';
+import { ChainId, getAsset } from '../../../modules/cryptoassets';
 
 export const injectEthereumAssetChain = {
   // Inject ethereum asset -> chain

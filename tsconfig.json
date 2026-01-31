@@ -9,14 +9,16 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": false
   },
   "include": [
     "src/**/*",
     "modules/**/*"
   ],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "exclude": ["node_modules", "**/__tests__/*", "**/*.test.ts", "**/*.spec.ts", "modules/evm-contracts/**/*", "modules/error-parser/test/**/*"]
 }

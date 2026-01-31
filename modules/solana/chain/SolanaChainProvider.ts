@@ -1,8 +1,8 @@
-import { Chain } from '@chainify/client';
-import { BlockNotFoundError, TxNotFoundError, UnsupportedMethodError } from '../errors';
-import { Logger } from '@chainify/logger';
-import { AddressType, Asset, AssetTypes, BigNumber, Block, FeeDetails, Network, TokenDetails, Transaction } from '../types';
-import { compare, retry } from '@chainify/utils';
+import { Chain } from '../../client';
+import { BlockNotFoundError, TxNotFoundError, UnsupportedMethodError } from '../../errors';
+import { Logger } from '../../logger';
+import { AddressType, Asset, AssetTypes, BigNumber, Block, FeeDetails, Network, TokenDetails, Transaction } from '../../types';
+import { compare, retry } from '../../utils';
 import { AccountLayout, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { ENV, TokenInfo, TokenListProvider } from '@solana/spl-token-registry';
 import { BlockResponse, Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';

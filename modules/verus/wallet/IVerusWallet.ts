@@ -1,5 +1,5 @@
-import { Chain, Wallet } from '@chainify/client';
-import { Address, FeeType, Transaction, TransactionRequest } from '../types';
+import { Chain, Wallet } from '../../client';
+import { Address, FeeType, Transaction, TransactionRequest } from '../../types';
 import { PsbtInputTarget } from '../types';
 
 export interface IVerusWallet<T, S = any> extends Wallet<T, S> {

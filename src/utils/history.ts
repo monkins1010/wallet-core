@@ -1,6 +1,5 @@
 import moment from 'moment';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
-import { getSwapProvider } from '../factory/swap';
+import { CUSTOM_ERRORS, createInternalError } from '../../modules/error-parser';
 import { HistoryItem, SendStatus, TransactionType } from '../store/types';
 
 export const SEND_STATUS_STEP_MAP = {
@@ -22,15 +21,7 @@ export function getStatusLabel(item: HistoryItem) {
   if (item.type === TransactionType.Send) {
     return SEND_STATUS_LABEL_MAP[item.status] || '';
   }
-  if (item.type === TransactionType.Swap) {
-    const swapProvider = getSwapProvider(item.network, item.provider);
-    return (
-      swapProvider.statuses[item.status].label
-        .replace('{from}', item.from)
-        .replace('{to}', item.to)
-        .replace('{bridgeAsset}', item.bridgeAsset || '') || ''
-    );
-  }
+  return '';
 }
 
 export function getStep(item: HistoryItem) {
@@ -41,19 +32,11 @@ export function getStep(item: HistoryItem) {
   if (itemType === TransactionType.Send) {
     return SEND_STATUS_STEP_MAP[item.status];
   }
-  if (itemType === TransactionType.Swap) {
-    const swapProvider = getSwapProvider(item.network, item.provider);
-    return swapProvider.statuses[item.status].step;
-  }
 
   throw createInternalError(CUSTOM_ERRORS.Invalid.TransactionType(itemType));
 }
 
 export const ACTIVITY_FILTER_TYPES = {
-  SWAP: {
-    label: 'Swap',
-    icon: 'swap',
-  },
   NFT: {
     label: 'NFT',
     icon: 'nft',
@@ -111,11 +94,6 @@ export const applyActivityFilters = (
   let fiteredByStatus = [...filteredByType];
   if (statuses.length > 0) {
     fiteredByStatus = [...fiteredByStatus].filter((i) => {
-      if (i.type === 'SWAP') {
-        const swapProvider = getSwapProvider(i.network, i.provider);
-        return statuses.includes(swapProvider.statuses[i.status].filterStatus);
-      }
-
       if (i.type === 'SEND') {
         return statuses.includes(SEND_STATUS_FILTER_MAP[i.status]);
       }

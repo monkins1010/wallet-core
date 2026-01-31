@@ -1,7 +1,7 @@
 import { WalletOptions } from '../types';
 
 class WalletOptionsStore {
-  walletOptions: WalletOptions;
+  walletOptions!: WalletOptions;
   setOptions(options: WalletOptions) {
     this.walletOptions = options;
   }

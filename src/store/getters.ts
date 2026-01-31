@@ -1,9 +1,9 @@
-import { Client } from '../modules/client';
-import { FeeDetails, EIP1559Fee, Nullable } from '../modules/types';
+import { Client } from '../../modules/client';
+import { FeeDetails, EIP1559Fee, Nullable } from '../../modules/types';
 import cryptoassets from '../utils/cryptoassets';
 import { ChainifyNetwork } from '../types';
-import { AssetTypes, ChainId, getAllAssets, IAsset, unitToCurrency, getNativeAssetCode } from '@liquality/cryptoassets';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
+import { AssetTypes, ChainId, getAllAssets, IAsset, unitToCurrency, getNativeAssetCode } from '../../modules/cryptoassets';
+import { CUSTOM_ERRORS, createInternalError } from '../../modules/error-parser';
 import BN, { BigNumber } from 'bignumber.js';
 import { mapValues, orderBy, uniq } from 'lodash';
 import { defaultChainSettings } from '../factory/settings';
@@ -186,11 +186,11 @@ export default {
         fast: 3,
       };
 
-      Object.keys(fetchedFees).forEach((speed: 'slow' | 'average' | 'fast') => {
-        const feeSet = (<EIP1559Fee>fetchedFees[speed].fee).maxPriorityFeePerGas;
+      Object.keys(fetchedFees).forEach((speed) => {
+        const feeSet = (<EIP1559Fee>fetchedFees[speed as 'slow' | 'average' | 'fast'].fee).maxPriorityFeePerGas;
 
         if (feeSet < 30) {
-          (<EIP1559Fee>fetchedFees[speed].fee).maxPriorityFeePerGas = 30 + incrementMapping[speed];
+          (<EIP1559Fee>fetchedFees[speed as 'slow' | 'average' | 'fast'].fee).maxPriorityFeePerGas = 30 + incrementMapping[speed as 'slow' | 'average' | 'fast'];
         }
       });
 
@@ -439,12 +439,19 @@ export default {
   mergedChainSettings(...context: GetterContext): Record<ChainId, ChainifyNetwork> {
     const { state } = rootGetterContext(context);
     const { customChainSeetings, activeNetwork, activeWalletId } = state;
-    const _customSettings = customChainSeetings[activeNetwork]?.[activeWalletId] || {};
-    const settings = defaultChainSettings[activeNetwork] || {};
-    return {
-      ...settings,
-      ..._customSettings,
-    };
+    const _customSettings: Record<ChainId, ChainifyNetwork> = customChainSeetings[activeNetwork]?.[activeWalletId] || {} as Record<ChainId, ChainifyNetwork>;
+    const settings: Record<ChainId, ChainifyNetwork> = defaultChainSettings[activeNetwork] || {} as Record<ChainId, ChainifyNetwork>;
+
+    // Ensure all ChainId keys are present
+    const allChainIds = Object.values(ChainId) as ChainId[];
+    const merged: Record<ChainId, ChainifyNetwork> = {} as Record<ChainId, ChainifyNetwork>;
+    for (const chainId of allChainIds) {
+      merged[chainId] = {
+        ...(settings[chainId] || {}),
+        ...(_customSettings[chainId] || {}),
+      } as ChainifyNetwork;
+    }
+    return merged;
   },
   chainSettings(...context: GetterContext): { chain: string; asset: string; network: ChainifyNetwork }[] {
     const {

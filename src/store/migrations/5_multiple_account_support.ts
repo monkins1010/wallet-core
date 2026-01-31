@@ -1,4 +1,4 @@
-import { ChainId, getAllAssets, getAsset, getChain } from '@liquality/cryptoassets';
+import { ChainId, getAllAssets, getAsset, getChain } from '../../../modules/cryptoassets';
 import buildConfig from '../../build.config';
 import { accountCreator, getNextAccountColor } from '../../utils/accounts';
 import { AccountType, Network } from '../types';

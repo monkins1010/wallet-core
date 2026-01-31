@@ -1,7 +1,8 @@
-import { Chain, Wallet } from '@chainify/client';
-import { UnimplementedMethodError } from '../errors';
-import { Address, AddressType, Asset, BigNumber, FeeType, Network, Transaction, TransactionRequest } from '../types';
-import { ECPair, Psbt, script, Transaction as BitcoinJsTransaction } from 'bitcoinjs-lib';
+import { Chain, Wallet } from '../../client';
+import { UnimplementedMethodError } from '../../errors';
+import { Address, AddressType, Asset, BigNumber, FeeType, Network, Transaction, TransactionRequest } from '../../types';
+import { ECPair } from '../crypto';
+import { Psbt, script, Transaction as BitcoinJsTransaction } from 'bitcoinjs-lib';
 import { flatten, isString, uniq } from 'lodash';
 import { BitcoinBaseChainProvider } from '../chain/BitcoinBaseChainProvider';
 import { AddressGrouping, AddressInfo, ReceivedByAddress } from '../chain/jsonRpc/types';

@@ -1,4 +1,4 @@
-import { ChainId } from '@liquality/cryptoassets';
+import { ChainId } from '../../modules/cryptoassets';
 import { LATEST_VERSION } from './migrations';
 import { Network, RootState } from './types';
 

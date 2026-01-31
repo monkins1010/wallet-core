@@ -1,5 +1,5 @@
-import { JsonRpcProvider } from '@chainify/client';
-import { AddressType, BigNumber, Transaction, Address } from '../types';
+import { JsonRpcProvider } from '../../../client';
+import { AddressType, BigNumber, Transaction, Address } from '../../../types';
 import { AddressTxCounts, UTXO as VerusUTXO, AddressDeltas } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
 import { VerusBaseChainProvider } from '../VerusBaseChainProvider';

@@ -1,6 +1,6 @@
 import { ActionContext, rootActionContext } from '..';
-import { ChainId } from '@liquality/cryptoassets';
-import { Network as ChainifyNetwork } from '../modules/types';
+import { ChainId } from '../../../modules/cryptoassets';
+import { Network as ChainifyNetwork } from '../../../modules/types';
 import { WalletId, Network } from '../types';
 import { clientCache } from '../utils';
 

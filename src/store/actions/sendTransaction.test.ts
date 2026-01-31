@@ -1,4 +1,4 @@
-import { ChainId } from '@liquality/cryptoassets';
+import { ChainId } from '../../../modules/cryptoassets';
 import BN from 'bignumber.js';
 import * as Process from 'process';
 import { setupWallet } from '../../index';

@@ -1,5 +1,5 @@
 import { createDirectStore } from 'direct-vuex';
-import Vue from 'vue';
+import * as Vue from 'vue';
 import Vuex, { ActionContext as _ActionContext } from 'vuex';
 import * as actions from './actions';
 import getters from './getters';
@@ -7,7 +7,7 @@ import mutations from './mutations';
 import state from './state';
 import { RootState } from './types';
 
-Vue.use(Vuex);
+(Vue as any).default?.use?.(Vuex) || (Vue as any).use?.(Vuex);
 
 const { store, rootActionContext, rootGetterContext, moduleActionContext, moduleGetterContext } = createDirectStore({
   state,

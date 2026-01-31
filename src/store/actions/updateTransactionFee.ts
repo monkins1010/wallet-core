@@ -1,10 +1,8 @@
-import { Transaction } from '../modules/types';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
+import { Transaction } from '../../../modules/types';
+import { CUSTOM_ERRORS, createInternalError } from '../../../modules/error-parser';
 import { isObject } from 'lodash';
 import { ActionContext, rootActionContext } from '..';
-import { getSwapProvider } from '../../factory/swap';
-import { LiqualitySwapHistoryItem, LiqualitySwapProvider } from '../../swaps/liquality/LiqualitySwapProvider';
-import { Asset, HistoryItem, Network, TransactionType, WalletId } from '../types';
+import { Asset, HistoryItem, Network, WalletId } from '../types';
 import { unlockAsset } from '../utils';
 
 export const updateTransactionFee = async (
@@ -36,12 +34,9 @@ export const updateTransactionFee = async (
 
   const feeKey = {
     tx: 'fee',
-    fromFundTx: 'fee',
-    toClaimTx: 'claimFee',
-    refundTx: 'fee',
   }[txKey] as string;
 
-  const accountId = item.type === TransactionType.Swap ? item.fromAccountId : item.accountId;
+  const accountId = (item as any).accountId;
   const account = getters.accountItem(accountId)!;
 
   const client = getters.client({
@@ -61,11 +56,7 @@ export const updateTransactionFee = async (
     asset,
   });
   try {
-    if (client.swap.canUpdateFee()) {
-      newTx = await client.swap.updateTransactionFee(oldTx, newFee);
-    } else {
-      newTx = await client.wallet.updateTransactionFee(oldTx, newFee);
-    }
+    newTx = await client.wallet.updateTransactionFee(oldTx, newFee);
   } catch (e) {
     console.warn(e);
     throw e;
@@ -85,16 +76,6 @@ export const updateTransactionFee = async (
     id: id,
     updates,
   });
-
-  const isFundingUpdate = hashKey === 'fromFundHash';
-  if (isFundingUpdate) {
-    if (item.type !== TransactionType.Swap) {
-      throw createInternalError(CUSTOM_ERRORS.Invalid.Default);
-    }
-    // TODO: this should be the function of any swap? Should be able to bump any tx
-    const swapProvider = getSwapProvider(network, item.provider) as LiqualitySwapProvider;
-    await swapProvider.updateOrder(item as LiqualitySwapHistoryItem);
-  }
 
   return newTx;
 };

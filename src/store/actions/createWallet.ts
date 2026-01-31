@@ -1,4 +1,4 @@
-import { ChainId, getAsset, getChain } from '@liquality/cryptoassets';
+import { ChainId, getAsset, getChain } from '../../../modules/cryptoassets';
 import { v4 as uuidv4 } from 'uuid';
 import { ActionContext, rootActionContext } from '..';
 import buildConfig from '../../build.config';

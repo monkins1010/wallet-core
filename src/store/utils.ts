@@ -1,6 +1,6 @@
-import { Client, HttpClient } from '../modules/client';
-import { EvmChainProvider, EvmWalletProvider } from '../modules/evm';
-import { AssetTypes, ChainId, getChain } from '@liquality/cryptoassets';
+import { Client, HttpClient } from '../../modules/client';
+import { EvmChainProvider, EvmWalletProvider } from '../../modules/evm';
+import { AssetTypes, ChainId, getChain } from '../../modules/cryptoassets';
 import BN from 'bignumber.js';
 import EventEmitter from 'events';
 import { findKey, mapKeys, mapValues, random } from 'lodash';

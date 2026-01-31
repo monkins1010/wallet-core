@@ -1,6 +1,6 @@
-import { Wallet } from '@chainify/client';
-import { UnimplementedMethodError } from '../errors';
-import { Logger } from '@chainify/logger';
+import { Wallet } from '../../client';
+import { UnimplementedMethodError } from '../../errors';
+import { Logger } from '../../logger';
 import {
     Address,
     AddressType,
@@ -13,8 +13,8 @@ import {
     TransactionRequest,
     TxStatus,
     WalletOptions,
-} from '../types';
-import { base58, retry } from '@chainify/utils';
+} from '../../types';
+import { base58, retry } from '../../utils';
 import {
     createAccount,
     createTransferInstruction,

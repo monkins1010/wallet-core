@@ -1,5 +1,5 @@
-import { ChainId } from '@liquality/cryptoassets';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
+import { ChainId } from '../../../modules/cryptoassets';
+import { CUSTOM_ERRORS, createInternalError } from '../../../modules/error-parser';
 import Bluebird from 'bluebird';
 import cryptoassets from '../../utils/cryptoassets';
 import { ActionContext, rootActionContext } from '..';

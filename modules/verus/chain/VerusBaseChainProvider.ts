@@ -1,4 +1,4 @@
-import { AddressType, Transaction } from '../types';
+import { AddressType, Transaction } from '../../types';
 import { AddressTxCounts, UTXO } from '../types';
 
 export abstract class VerusBaseChainProvider {

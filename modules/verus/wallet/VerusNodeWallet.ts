@@ -1,6 +1,6 @@
-import { Chain, Wallet } from '@chainify/client';
-import { UnimplementedMethodError } from '../errors';
-import { Address, AddressType, Asset, BigNumber, FeeType, Network, Transaction, TransactionRequest } from '../types';
+import { Chain, Wallet } from '../../client';
+import { UnimplementedMethodError } from '../../errors';
+import { Address, AddressType, Asset, BigNumber, FeeType, Network, Transaction, TransactionRequest } from '../../types';
 import { flatten, isString, uniq } from 'lodash';
 import { VerusBaseChainProvider } from '../chain/VerusBaseChainProvider';
 import { AddressGrouping, AddressInfo, ReceivedByAddress } from '../chain/jsonRpc/types';

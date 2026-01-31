@@ -1,6 +1,6 @@
-import { NodeError } from '../errors';
-import { FeeDetails } from '../types';
-import { Math } from '@chainify/utils';
+import { NodeError } from '../../../errors';
+import { FeeDetails } from '../../../types';
+import { Math } from '../../../utils';
 
 export class EthereumFeeParser {
     public parse(response: EthereumResponse): FeeDetails {
@@ -31,7 +31,7 @@ export class EthereumFeeParser {
                 },
             };
         } else {
-            throw new NodeError('Could not fetch Ethereum fee data', response);
+            throw new NodeError('Could not fetch Ethereum fee data', response as unknown as Record<string, unknown>);
         }
     }
 }

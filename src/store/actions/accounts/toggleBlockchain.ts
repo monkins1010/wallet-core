@@ -1,4 +1,4 @@
-import { ChainId } from '@liquality/cryptoassets';
+import { ChainId } from '../../../../modules/cryptoassets';
 import { ActionContext, rootActionContext } from '../..';
 import buildConfig from '../../../build.config';
 import { Network, WalletId } from '../../types';

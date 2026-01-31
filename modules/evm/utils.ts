@@ -1,5 +1,5 @@
-import { AssetTypes, BigNumber, BigNumberish, Block, EIP1559Fee, FeeType, SwapParams, Transaction, TxStatus } from '../types';
-import { ensure0x } from '@chainify/utils';
+import { AssetTypes, BigNumber, BigNumberish, Block, EIP1559Fee, FeeType, Transaction, TxStatus } from '../types';
+import { ensure0x } from '../utils';
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
 import { AddressZero } from '@ethersproject/constants';
 import { TransactionReceipt, TransactionRequest } from '@ethersproject/providers';
@@ -23,17 +23,6 @@ export function toEthereumTxRequest(tx: EthersPopulatedTransaction, fee: FeeType
         maxFeePerGas: tx.maxFeePerGas?.toNumber(),
         maxPriorityFeePerGas: tx.maxPriorityFeePerGas?.toNumber(),
         fee,
-    };
-}
-
-export function parseSwapParams(tx: SwapParams): ILiqualityHTLC.HTLCDataStruct {
-    return {
-        amount: tx.value.toString(10),
-        expiration: tx.expiration,
-        secretHash: ensure0x(tx.secretHash),
-        tokenAddress: ensure0x(tx.asset.type === AssetTypes.native ? AddressZero : tx.asset.contractAddress),
-        refundAddress: ensure0x(tx.refundAddress.toString()),
-        recipientAddress: ensure0x(tx.recipientAddress.toString()),
     };
 }
 

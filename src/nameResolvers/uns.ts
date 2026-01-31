@@ -1,7 +1,7 @@
-import { HttpClient } from '../modules/client';
-import { Nullable } from '../modules/types';
-import { IAsset, AssetTypes, ChainId, getChain } from '@liquality/cryptoassets';
-import { Network } from '@liquality/cryptoassets/dist/src/types';
+import { HttpClient } from '../../modules/client';
+import { Nullable } from '../../modules/types';
+import { IAsset, AssetTypes, ChainId, getChain } from '../../modules/cryptoassets';
+import { Network } from '../../modules/cryptoassets/types';
 import { Resolution, ResolutionResponse } from '@unstoppabledomains/resolution';
 import buildConfig from '../build.config';
 import { NameResolver } from './nameResolver';
@@ -35,7 +35,7 @@ function multiAssetChainKey(chainId: ChainId): string | null {
 }
 
 class UNSResolver implements NameResolver {
-  supportedTlds: string[] | null;
+  supportedTlds!: string[] | null;
 
   async lookupDomain(address: string, asset: IAsset): Promise<Nullable<string>> {
     try {

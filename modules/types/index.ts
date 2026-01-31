@@ -9,7 +9,6 @@ export * from './Fees';
 export * from './Naming';
 export * from './Network';
 export * from './Nft';
-export * from './Swap';
 export * from './Transaction';
 export * from './Wallet';
 export { BigNumber };

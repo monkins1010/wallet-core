@@ -1,27 +1,23 @@
 import Chain from './Chain';
 import Nft from './Nft';
-import Swap from './Swap';
 import Wallet from './Wallet';
 
 export default class Client<
     ChainType extends Chain<any> = Chain<any>,
     WalletType extends Wallet<any, any> = Wallet<any, any>,
-    SwapType extends Swap<any, any> = Swap<any, any>,
     NftType extends Nft<any, any> = Nft<any, any>
 > {
     private _chain: ChainType;
     private _wallet: WalletType;
-    private _swap: SwapType;
     private _nft: NftType;
 
-    constructor(chain?: ChainType, wallet?: WalletType, swap?: SwapType, nft?: NftType) {
+    constructor(chain?: ChainType, wallet?: WalletType, nft?: NftType) {
         this._chain = chain;
         this._wallet = wallet;
-        this._swap = swap;
         this._nft = nft;
     }
 
-    connect(provider: ChainType | WalletType | SwapType | NftType) {
+    connect(provider: ChainType | WalletType | NftType) {
         switch (true) {
             case provider instanceof Chain: {
                 this.chain = provider as ChainType;
@@ -35,32 +31,15 @@ export default class Client<
                 this.wallet = provider as WalletType;
                 this.connectChain();
 
-                if (this.swap) {
-                    this.swap.setWallet(this.wallet);
-                }
-
                 if (this.nft) {
                     this.nft.setWallet(this.wallet);
                 }
-                break;
-            }
-
-            case provider instanceof Swap: {
-                this.swap = provider as SwapType;
-                this.connectWallet(this.swap);
-                if (this.nft) {
-                    this.nft.setWallet(this.wallet);
-                }
-                this.connectChain();
                 break;
             }
 
             case provider instanceof Nft: {
                 this._nft = provider as NftType;
                 this.connectWallet(this.nft);
-                if (this.swap) {
-                    this.swap.setWallet(this.wallet);
-                }
                 this.connectChain();
                 break;
             }
@@ -85,14 +64,6 @@ export default class Client<
         this._wallet = wallet;
     }
 
-    get swap() {
-        return this._swap;
-    }
-
-    set swap(swap: SwapType) {
-        this._swap = swap;
-    }
-
     get nft() {
         return this._nft;
     }
@@ -108,7 +79,7 @@ export default class Client<
         }
     }
 
-    private connectWallet(source: SwapType | NftType) {
+    private connectWallet(source: NftType) {
         const wallet = source?.getWallet() as WalletType;
         if (wallet) {
             this.wallet = wallet;

@@ -1,5 +1,5 @@
-import { Fee } from '@chainify/client';
-import { BigNumber, FeeDetails } from '../types';
+import { Fee } from '../../client';
+import { BigNumber, FeeDetails } from '../../types';
 import { Network, StaticJsonRpcProvider } from '@ethersproject/providers';
 import { FeeOptions } from '../types';
 import { calculateFee } from '../utils';

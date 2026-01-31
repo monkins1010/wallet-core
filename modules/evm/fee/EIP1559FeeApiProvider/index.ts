@@ -1,6 +1,6 @@
-import { Fee, HttpClient } from '@chainify/client';
-import { UnsupportedMethodError } from '../errors';
-import { FeeDetails } from '../types';
+import { Fee, HttpClient } from '../../../client';
+import { UnsupportedMethodError } from '../../../errors';
+import { FeeDetails } from '../../../types';
 import { EvmNetworks } from '../../networks';
 import { EthereumFeeParser, EthereumResponse } from './ethereum';
 import { PolygonFeeParser, PolygonResponse } from './polygon';

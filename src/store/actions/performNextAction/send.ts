@@ -1,4 +1,4 @@
-import { TxStatus } from '../modules/types';
+import { TxStatus } from '../../../../modules/types';
 import { ActionContext, rootActionContext } from '../..';
 import { Network, SendHistoryItem, SendStatus, WalletId } from '../../types';
 import { withInterval } from './utils';

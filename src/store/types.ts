@@ -1,9 +1,8 @@
-import { FeeDetails, NFTAsset, Nullable, Transaction } from '../modules/types';
-import { ChainId } from '@liquality/cryptoassets';
+import { FeeDetails, NFTAsset, Nullable, Transaction } from '../../modules/types';
+import { ChainId } from '../../modules/cryptoassets';
 import { Step } from '@lifi/sdk';
-import { SwapProviderError } from '../swaps/types';
 import BN from 'bignumber.js';
-import { LiqualityErrorJSON } from '@liquality/error-parser';
+import { LiqualityErrorJSON } from '../../modules/error-parser';
 import { ChainifyNetwork } from '../types';
 export type NetworkWalletIdMap<T> = Partial<Record<Network, Record<WalletId, T>>>;
 export type WalletIdNetworkMap<T> = Partial<Record<WalletId, Record<Network, T>>>;
@@ -113,25 +112,7 @@ export enum FeeLabel {
 
 export enum TransactionType {
   Send = 'SEND',
-  Swap = 'SWAP',
   NFT = 'NFT',
-}
-
-export enum SwapProviderType {
-  Liquality = 'liquality',
-  LiqualityBoostNativeToERC20 = 'liqualityBoostNativeToERC20',
-  LiqualityBoostERC20ToNative = 'liqualityBoostERC20toNative',
-  UniswapV2 = 'uniswapV2',
-  FastBTCDeposit = 'fastBTC',
-  FastBTCWithdraw = 'fastBTCWithdraw',
-  OneInch = 'oneinchV4',
-  Sovryn = 'sovryn',
-  Thorchain = 'thorchain',
-  Astroport = 'astroport',
-  Hop = 'hop',
-  Jupiter = 'jupiter',
-  DeBridge = 'debridge',
-  LiFi = 'lifi'
 }
 
 export interface BaseHistoryItem {
@@ -188,23 +169,7 @@ export interface NFTSendHistoryItem extends BaseHistoryItem {
   status: SendStatus;
 }
 
-export interface SwapHistoryItem extends BaseHistoryItem {
-  type: TransactionType.Swap;
-  claimFeeLabel: FeeLabel;
-  claimFee: number;
-  fromAmount: string;
-  fromAccountId: AccountId;
-  provider: SwapProviderType;
-  slippage: number;
-  toAccountId: AccountId;
-  toAmount: string;
-  bridgeAsset?: Asset;
-  path?: string[];
-  lifiRoute?: Step; // LiFi
-  swapProviderError?: SwapProviderError;
-}
-
-export type HistoryItem = NFTSendHistoryItem | SendHistoryItem | SwapHistoryItem;
+export type HistoryItem = NFTSendHistoryItem | SendHistoryItem;
 
 export enum ExperimentType {
   ManageAccounts = 'manageAccounts',

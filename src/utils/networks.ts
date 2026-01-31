@@ -1,11 +1,9 @@
-import { BitcoinNetworks } from '../modules/bitcoin';
-import { VerusNetworks } from '../modules/verus';
-import { NearNetworks } from '../modules/near';
-import { SolanaNetworks } from '../modules/solana';
-import { TerraNetworks } from '../modules/terra';
-import { Network as ChainifyNetwork } from '../modules/types';
-import { ChainId, getChain } from '@liquality/cryptoassets';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
+import { BitcoinNetworks } from '../../modules/bitcoin';
+import { VerusNetworks } from '../../modules/verus';
+import { SolanaNetworks } from '../../modules/solana';
+import { Network as ChainifyNetwork } from '../../modules/types';
+import { ChainId, getChain } from '../../modules/cryptoassets';
+import { CUSTOM_ERRORS, createInternalError } from '../../modules/error-parser';
 import { Network } from '../store/types';
 
 export const Networks = [Network.Mainnet, Network.Testnet];
@@ -23,31 +21,11 @@ export const ChainNetworks: ChainNetworksType = {
     mainnet: VerusNetworks.verus,
   },
 
-  [ChainId.Near]: {
-    testnet: NearNetworks.near_testnet,
-    mainnet: {
-      ...NearNetworks.near_mainnet,
-      rpcUrl: process.env.VUE_APP_NEAR_MAINNET_URL || NearNetworks.near_mainnet.rpcUrl,
-    },
-  },
-
   [ChainId.Solana]: {
     testnet: SolanaNetworks.solana_testnet,
     mainnet: {
       ...SolanaNetworks.solana_mainnet,
       rpcUrl: process.env.VUE_APP_SOLANA_MAINNET_URL || SolanaNetworks.solana_mainnet.rpcUrl,
-    },
-  },
-
-  [ChainId.Terra]: {
-    testnet: {
-      ...TerraNetworks.terra_testnet,
-      rpcUrl: 'https://pisco-lcd.terra.dev',
-      helperUrl: 'https://pisco-fcd.terra.dev',
-    },
-    mainnet: {
-      ...TerraNetworks.terra_mainnet,
-      rpcUrl: process.env.VUE_APP_TERRA_MAINNET_URL || TerraNetworks.terra_mainnet.rpcUrl,
     },
   },
 };

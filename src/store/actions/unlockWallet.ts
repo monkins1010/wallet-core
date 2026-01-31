@@ -1,4 +1,4 @@
-import { PasswordError } from '@liquality/error-parser';
+import { PasswordError } from '../../../modules/error-parser';
 import { ActionContext, rootActionContext } from '..';
 import { decrypt } from '../../utils/crypto';
 

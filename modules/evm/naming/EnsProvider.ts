@@ -1,4 +1,4 @@
-import { AddressType, NamingProvider } from '../types';
+import { AddressType, NamingProvider } from '../../types';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 
 export class EnsProvider implements NamingProvider {

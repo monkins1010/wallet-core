@@ -1,7 +1,7 @@
-import { Chain } from '@chainify/client';
+import { Chain } from '../client';
 import { UnimplementedMethodError } from '../errors';
-import { EvmBaseWalletProvider } from '@chainify/evm';
-import { LedgerProvider } from '@chainify/hw-ledger';
+import { EvmBaseWalletProvider } from '../evm';
+import { LedgerProvider } from '../hw-ledger';
 import { Address, Network } from '../types';
 import { getAddress } from '@ethersproject/address';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';

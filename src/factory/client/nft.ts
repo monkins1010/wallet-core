@@ -1,4 +1,4 @@
-import { CovalentNftProvider, EvmBaseWalletProvider, InfuraNftProvider, OpenSeaNftProvider } from '../modules/evm';
+import { CovalentNftProvider, EvmBaseWalletProvider, InfuraNftProvider, OpenSeaNftProvider } from '../../../modules/evm';
 import { BaseProvider } from '@ethersproject/providers';
 import { NftProviderType } from '../../store/types';
 

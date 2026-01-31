@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { ChainId } from '@liquality/cryptoassets';
+import { ChainId } from '../../modules/cryptoassets';
 import { AccountType, Network } from '../store/types';
 import { getDerivationPath } from './derivationPath';
 

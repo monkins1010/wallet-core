@@ -1,4 +1,4 @@
-import { AddressType, Asset, AssetTypes, BigNumber } from '../types';
+import { AddressType, Asset, AssetTypes, BigNumber } from '../../types';
 import { Interface } from '@ethersproject/abi';
 import { BaseProvider } from '@ethersproject/providers';
 import { ERC20__factory, Multicall3, Multicall3__factory } from '../typechain';

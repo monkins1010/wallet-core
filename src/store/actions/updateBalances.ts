@@ -1,7 +1,7 @@
-import { Client } from '../modules/client';
-import { EvmChainProvider, EvmTypes } from '../modules/evm';
-import { Address, AddressType, BigNumber } from '../modules/types';
-import { ChainId, getChain } from '@liquality/cryptoassets';
+import { Client } from '../../../modules/client';
+import { EvmChainProvider, EvmTypes } from '../../../modules/evm';
+import { Address, AddressType, BigNumber } from '../../../modules/types';
+import { ChainId, getChain } from '../../../modules/cryptoassets';
 import Bluebird from 'bluebird';
 import { chunk } from 'lodash';
 import { ActionContext, rootActionContext } from '..';

@@ -1,12 +1,12 @@
-import { FeeDetails, Nullable, Network as ChainifyNetwork } from '../modules/types';
-import { ChainId } from '@liquality/cryptoassets';
+import { FeeDetails, Nullable, Network as ChainifyNetwork } from '../../modules/types';
+import { ChainId } from '../../modules/cryptoassets';
 import {
   CUSTOM_ERRORS,
   createInternalError,
   updateErrorReporterConfig,
   LiqualityErrorJSON,
-} from '@liquality/error-parser';
-import Vue from 'vue';
+} from '../../modules/error-parser';
+import * as Vue from 'vue';
 import store from '.';
 import {
   Account,
@@ -24,35 +24,37 @@ import {
   NFTSendHistoryItem,
   RootState,
   SendHistoryItem,
-  SwapHistoryItem,
   Wallet,
   WalletId,
 } from './types';
 
 const ensureNetworkWalletTree = (ref: any, network: Network, walletId: WalletId, initialValue: any) => {
-  if (!ref[network]) Vue.set(ref, network, {});
-  if (!ref[network][walletId]) Vue.set(ref[network], walletId, initialValue);
+  if (!ref[network]) ref[network] = {};
+  if (!ref[network][walletId]) ref[network][walletId] = initialValue;
 };
 
 const ensureOriginWalletTree = (ref: any, walletId: WalletId, origin: string, initialValue: any) => {
-  if (!ref[walletId]) Vue.set(ref, walletId, {});
-  if (!ref[walletId][origin]) Vue.set(ref[walletId], origin, initialValue);
+  if (!ref[walletId]) ref[walletId] = {};
+  if (!ref[walletId][origin]) ref[walletId][origin] = initialValue;
 };
 
 const ensureAccountsWalletTree = (ref: any, walletId: WalletId, network: Network, initialValue: any) => {
-  if (!ref[walletId]) Vue.set(ref, walletId, {});
-  if (!ref[walletId][network]) Vue.set(ref[walletId], network, initialValue);
+  if (!ref[walletId]) ref[walletId] = {};
+  if (!ref[walletId][network]) ref[walletId][network] = initialValue;
 };
 
 const ensureEnableChainsWalletTree = (ref: RootState, walletId: WalletId, network: Network) => {
   if (!ref.enabledChains) {
-    Vue.set(ref, 'enabledChains', {});
+    ref.enabledChains = {};
   }
   if (!ref.enabledChains[walletId]) {
-    Vue.set(ref.enabledChains, walletId, {});
+    ref.enabledChains[walletId] = {
+      mainnet: [],
+      testnet: []
+    };
   }
   if (!ref.enabledChains[walletId]?.[network]) {
-    Vue.set(ref.enabledChains[walletId]!, network, []);
+    ref.enabledChains[walletId][network] = [];
   }
 };
 
@@ -77,10 +79,10 @@ export default {
     state.encryptedWallets = encryptedWallets;
     state.wallets = [wallet];
     if (!state.accounts[wallet.id]) {
-      Vue.set(state.accounts, wallet.id, {
+      state.accounts[wallet.id] = {
         mainnet: [],
         testnet: [],
-      });
+      };
     }
   },
   ACCEPT_TNC(state: RootState) {
@@ -113,14 +115,6 @@ export default {
     state.key = key;
     state.wallets = wallets;
     state.unlockedAt = unlockedAt;
-  },
-  NEW_SWAP(
-    state: RootState,
-    { network, walletId, swap }: { network: Network; walletId: WalletId; swap: SwapHistoryItem }
-  ) {
-    ensureNetworkWalletTree(state.history, network, walletId, []);
-
-    state.history[network]![walletId].push(swap);
   },
   NEW_TRASACTION(
     state: RootState,
@@ -158,16 +152,12 @@ export default {
 
       if (item) {
         const updatedItem = Object.assign({}, item, updates);
-        Vue.set(state.history[network]![walletId], itemIndex, updatedItem);
+        state.history[network]![walletId][itemIndex] = updatedItem;
       }
     }
   },
   REMOVE_ORDER(state: RootState, { network, walletId, id }: { network: Network; walletId: WalletId; id: string }) {
-    Vue.set(
-      state.history[network]!,
-      walletId,
-      state.history[network]![walletId].filter((i) => i.id !== id)
-    );
+    state.history[network]![walletId] = state.history[network]![walletId].filter((i) => i.id !== id);
   },
   UPDATE_BALANCE(
     state: RootState,
@@ -200,7 +190,7 @@ export default {
           balances,
         };
 
-        Vue.set(state.accounts[walletId]![network], index, updatedAccount);
+        state.accounts[walletId]![network][index] = updatedAccount;
       }
     }
   },
@@ -244,7 +234,7 @@ export default {
             balances: { ...currentBalances, ...updatedBalances },
           };
 
-          Vue.set(wallet[network], index, updatedAccount);
+          wallet[network][index] = updatedAccount;
         }
       }
     }
@@ -255,7 +245,7 @@ export default {
   ) {
     ensureNetworkWalletTree(state.fees, network, walletId, {});
 
-    Vue.set(state.fees[network]![walletId], asset, fees);
+    state.fees[network]![walletId][asset] = fees;
   },
   UPDATE_FIAT_RATES(state: RootState, { fiatRates }: { fiatRates: FiatRates }) {
     state.fiatRates = Object.assign({}, state.fiatRates, fiatRates);
@@ -264,7 +254,7 @@ export default {
     state.currenciesInfo = Object.assign({}, state.currenciesInfo, currenciesInfo);
   },
   UPDATE_MARKET_DATA(state: RootState, { network, marketData }: { network: Network; marketData: MarketData[] }) {
-    Vue.set(state.marketData, network, marketData);
+    state.marketData[network] = marketData;
   },
   SET_ETHEREUM_INJECTION_CHAIN(state: RootState, { chain }: { chain: ChainId }) {
     state.injectEthereumChain = chain;
@@ -287,11 +277,7 @@ export default {
     { network, walletId, assets }: { network: Network; walletId: WalletId; assets: Asset[] }
   ) {
     ensureNetworkWalletTree(state.enabledAssets, network, walletId, []);
-    Vue.set(
-      state.enabledAssets[network]!,
-      walletId,
-      state.enabledAssets[network]![walletId].filter((asset) => !assets.includes(asset))
-    );
+    state.enabledAssets[network]![walletId] = state.enabledAssets[network]![walletId].filter((asset) => !assets.includes(asset));
   },
   DISABLE_ACCOUNT_ASSETS(
     state: RootState,
@@ -324,14 +310,10 @@ export default {
           assets: _account.assets.filter((asset) => !assets.includes(asset)),
         };
 
-        Vue.set(state.accounts[walletId]![network], index, updatedAccount);
+        state.accounts[walletId]![network][index] = updatedAccount;
       }
     }
-    Vue.set(
-      state.enabledAssets[network]!,
-      walletId,
-      state.enabledAssets[network]![walletId].filter((asset) => !assets.includes(asset))
-    );
+    state.enabledAssets[network]![walletId] = state.enabledAssets[network]![walletId].filter((asset) => !assets.includes(asset));
   },
   ENABLE_ACCOUNT_ASSETS(
     state: RootState,
@@ -358,7 +340,7 @@ export default {
           assets: [..._account.assets.filter((asset) => !assets.includes(asset)), ...assets],
         };
 
-        Vue.set(state.accounts[walletId]![network], index, updatedAccount);
+        state.accounts[walletId]![network][index] = updatedAccount;
       }
     }
   },
@@ -386,12 +368,13 @@ export default {
     { network, walletId, account }: { network: Network; walletId: WalletId; account: Account }
   ) {
     if (!state.accounts[walletId]) {
-      Vue.set(state.accounts, walletId, {
-        [network]: [],
-      });
+      state.accounts[walletId] = {
+        mainnet: [],
+        testnet: [],
+      };
     }
     if (!state.accounts[walletId]![network]) {
-      Vue.set(state.accounts[walletId]!, network, []);
+      state.accounts[walletId]![network] = [];
     }
 
     state.accounts[walletId]![network].push(account);
@@ -418,7 +401,7 @@ export default {
           color,
         };
 
-        Vue.set(state.accounts[walletId]![network], index, updatedAccount);
+        state.accounts[walletId]![network][index] = updatedAccount;
       }
     }
   },
@@ -429,7 +412,7 @@ export default {
       const index = accounts.findIndex((account) => account.id === id);
       if (index >= 0) {
         const updatedAccounts = accounts.splice(index, 1);
-        Vue.set(state.accounts[walletId]!, network, [...updatedAccounts]);
+        state.accounts[walletId]![network] = [...updatedAccounts];
       }
     }
   },
@@ -458,7 +441,7 @@ export default {
           addresses: [...new Set(addresses)],
         };
 
-        Vue.set(state.accounts[walletId]![network], index, updatedAccount);
+        state.accounts[walletId]![network][index] = updatedAccount;
       }
     }
   },
@@ -471,7 +454,7 @@ export default {
   ) {
     ensureOriginWalletTree(state.externalConnections, activeWalletId, origin, {});
 
-    Vue.set(state.externalConnections[activeWalletId][origin], 'defaultEthereum', accountId);
+    state.externalConnections[activeWalletId][origin]['defaultEthereum'] = accountId;
   },
   ADD_EXTERNAL_CONNECTION(
     state: RootState,
@@ -490,10 +473,10 @@ export default {
     ensureOriginWalletTree(state.externalConnections, activeWalletId, origin, {});
 
     const accounts = state.externalConnections[activeWalletId]?.[origin]?.[chain] || [];
-    Vue.set(state.externalConnections[activeWalletId][origin], chain, [...new Set([accountId, ...accounts])]);
+    state.externalConnections[activeWalletId][origin][chain] = [...new Set([accountId, ...accounts])];
   },
   REMOVE_EXTERNAL_CONNECTIONS(state: RootState, { activeWalletId }: { activeWalletId: WalletId }) {
-    Vue.set(state.externalConnections, activeWalletId, {});
+    state.externalConnections[activeWalletId] = {};
   },
   SET_ANALYTICS_PREFERENCES(state: RootState, payload: Partial<AnalyticsState>) {
     state.analytics = {
@@ -510,7 +493,7 @@ export default {
     const account = state.accounts[walletId]![network].find((a) => a.id === accountId);
     if (!account) throw createInternalError(CUSTOM_ERRORS.NotFound.Account(accountId));
 
-    Vue.set(account, 'nfts', nfts);
+    account['nfts'] = nfts;
   },
   NFT_TOGGLE_STARRED(
     state: RootState,
@@ -556,11 +539,11 @@ export default {
   ) {
     ensureEnableChainsWalletTree(state, walletId, network);
 
-    const chains = state.enabledChains[walletId]![network];
+    const chains = state.enabledChains[walletId]?.[network] || [];
     if (enable) {
-      Vue.set(state.enabledChains[walletId]!, network, [...new Set([...chains, chainId])]);
+      state.enabledChains[walletId]![network] = [...new Set([...chains, chainId])];
     } else {
-      Vue.set(state.enabledChains[walletId]!, network, [...new Set([...chains.filter((c) => c !== chainId)])]);
+      state.enabledChains[walletId]![network] = [...new Set([...chains.filter((c) => c !== chainId)])];
     }
   },
   TOGGLE_ACCOUNT(
@@ -588,7 +571,7 @@ export default {
         enabled: enable,
       };
 
-      Vue.set(state.accounts[walletId]![network], index, updatedAccount);
+      state.accounts[walletId]![network][index] = updatedAccount;
     }
   },
   LOG_ERROR(state: RootState, error: LiqualityErrorJSON) {
@@ -613,13 +596,13 @@ export default {
     }: { network: Network; walletId: WalletId; chainId: ChainId; chanifyNetwork: ChainifyNetwork }
   ) {
     ensureNetworkWalletTree(state.customChainSeetings, network, walletId, {});
-    Vue.set(state.customChainSeetings[network]![walletId], chainId, chanifyNetwork);
+    state.customChainSeetings[network]![walletId][chainId] = chanifyNetwork;
   },
   REMOVE_CUSTOM_CHAIN_SETTINGS(
     state: RootState,
     { network, walletId, chainId }: { network: Network; walletId: WalletId; chainId: ChainId }
   ) {
     ensureNetworkWalletTree(state.customChainSeetings, network, walletId, {});
-    Vue.delete(state.customChainSeetings[network]![walletId], chainId);
+    delete state.customChainSeetings[network]![walletId][chainId];
   },
 };

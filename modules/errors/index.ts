@@ -1,9 +1,13 @@
-import BaseError from 'standard-error';
-
 function createError(name: string) {
-    const Error = class extends BaseError {};
-    Error.prototype.name = name;
-    return Error;
+    return class extends Error {
+        attrs?: Record<string, unknown>;
+        
+        constructor(message?: string, attrs?: Record<string, unknown>) {
+            super(message);
+            this.name = name;
+            this.attrs = attrs;
+        }
+    };
 }
 
 export const StandardError = createError('StandardError');

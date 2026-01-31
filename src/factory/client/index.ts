@@ -1,13 +1,11 @@
-import { ChainId, getChain } from '@liquality/cryptoassets';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
+import { ChainId, getChain } from '../../../modules/cryptoassets';
+import { CUSTOM_ERRORS, createInternalError } from '../../../modules/error-parser';
 import { AccountInfo, ClientSettings } from '../../store/types';
-import { createBtcClient, createNearClient, createSolanaClient, createTerraClient, createVerusClient } from './clients';
+import { createBtcClient, createSolanaClient, createVerusClient } from './clients';
 import { createEvmClient } from './evm';
-import { Network as ChainifyNetwork } from '../modules/types';
-import { NearTypes } from '../modules/near';
-import { TerraTypes } from '../modules/terra';
-import { BitcoinTypes } from '../modules/bitcoin';
-import { VerusTypes } from '../modules/verus';
+import { Network as ChainifyNetwork } from '../../../modules/types';
+import { BitcoinTypes } from '../../../modules/bitcoin';
+import { VerusTypes } from '../../../modules/verus';
 
 export const createClient = ({
   chainId,
@@ -16,7 +14,7 @@ export const createClient = ({
   accountInfo,
 }: {
   chainId: ChainId;
-  settings: ClientSettings<NearTypes.NearNetwork | TerraTypes.TerraNetwork | ChainifyNetwork>;
+  settings: ClientSettings<ChainifyNetwork>;
   mnemonic: string;
   accountInfo: AccountInfo;
 }) => {
@@ -29,12 +27,6 @@ export const createClient = ({
     switch (chainId) {
       case ChainId.Bitcoin:
         client = createBtcClient(settings as ClientSettings<BitcoinTypes.BitcoinNetwork>, mnemonic, accountInfo);
-        break;
-      case ChainId.Near:
-        client = createNearClient(settings as ClientSettings<NearTypes.NearNetwork>, mnemonic, accountInfo);
-        break;
-      case ChainId.Terra:
-        client = createTerraClient(settings as ClientSettings<TerraTypes.TerraNetwork>, mnemonic, accountInfo);
         break;
       case ChainId.Solana:
         client = createSolanaClient(settings, mnemonic, accountInfo);

@@ -1,5 +1,5 @@
-import { HttpClient } from '@chainify/client';
-import { AddressType } from '../types';
+import { HttpClient } from '../../../client';
+import { AddressType } from '../../../types';
 import { flatten } from 'lodash';
 import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';

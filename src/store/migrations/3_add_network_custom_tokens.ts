@@ -1,4 +1,4 @@
-import { ChainId } from '@liquality/cryptoassets';
+import { ChainId } from '../../../modules/cryptoassets';
 
 // Add network to custom tokens
 export const addNetworkCustomTokens = {

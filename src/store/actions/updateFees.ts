@@ -1,4 +1,4 @@
-import { FeeDetails } from '../modules/types';
+import { FeeDetails } from '../../../modules/types';
 import { ActionContext, rootActionContext } from '..';
 import { Asset } from '../types';
 

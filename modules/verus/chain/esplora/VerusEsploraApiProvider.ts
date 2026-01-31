@@ -1,6 +1,6 @@
-import { Chain, Fee, HttpClient } from '@chainify/client';
-import { BlockNotFoundError, TxNotFoundError } from '../errors';
-import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '../types';
+import { Chain, Fee, HttpClient } from '../../../client';
+import { BlockNotFoundError, TxNotFoundError } from '../../../errors';
+import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '../../../types';
 import { flatten } from 'lodash';
 import { VerusEsploraBaseProvider } from './VerusEsploraBaseProvider';
 import { VerusEsploraBatchBaseProvider } from './VerusEsploraBatchBaseProvider';

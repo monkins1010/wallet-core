@@ -1,6 +1,4 @@
-import { errorToLiqualityErrorString } from '@liquality/error-parser/dist/src/utils';
 import { ActionContext, rootActionContext } from '../..';
-import { getSwapProvider } from '../../../factory/swap';
 import { createHistoryNotification } from '../../broker/notification';
 import { HistoryItem, Network, TransactionType, WalletId } from '../../types';
 import { performNextTransactionAction } from './send';
@@ -17,16 +15,6 @@ export const performNextAction = async (
 
   let updates;
   try {
-    if (item.type === TransactionType.Swap) {
-      const swapProvider = getSwapProvider(network, item.provider);
-
-      // TODO: should it take typed context?
-      updates = await swapProvider.performNextSwapAction(context, {
-        network,
-        walletId,
-        swap: item,
-      });
-    }
     if (item.type === TransactionType.Send) {
       updates = await performNextTransactionAction(context, {
         network,
@@ -42,7 +30,7 @@ export const performNextAction = async (
       });
     }
   } catch (e) {
-    updates = { error: errorToLiqualityErrorString(e) };
+    updates = { error: e instanceof Error ? e.message : String(e) };
   }
   if (updates) {
     if (!updates.error) {

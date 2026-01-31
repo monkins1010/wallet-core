@@ -1,5 +1,5 @@
-import { HttpClient } from '@chainify/client';
-import { AddressType, BigNumber } from '../types';
+import { HttpClient } from '../../../client';
+import { AddressType, BigNumber } from '../../../types';
 import { flatten, uniq } from 'lodash';
 import { UTXO } from '../../types';
 import { VerusEsploraBaseProvider } from './VerusEsploraBaseProvider';

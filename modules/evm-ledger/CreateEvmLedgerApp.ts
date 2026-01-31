@@ -1,4 +1,4 @@
-import { CreateLedgerApp } from '@chainify/hw-ledger';
+import { CreateLedgerApp } from '../hw-ledger';
 import { Network } from '../types';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';
 import Transport from '@ledgerhq/hw-transport';

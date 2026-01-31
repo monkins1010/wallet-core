@@ -1,4 +1,4 @@
-import { ChainId, getChain } from '@liquality/cryptoassets';
+import { ChainId, getChain } from '../../../modules/cryptoassets';
 import { accountCreator, getNextAccountColor } from '../../utils/accounts';
 import { getDerivationPath } from '../../utils/derivationPath';
 import { Networks } from '../../utils/networks';

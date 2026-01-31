@@ -1,5 +1,5 @@
-import { TxNotFoundError } from '../modules/errors';
-import { LiqualityError } from '@liquality/error-parser';
+import { TxNotFoundError } from '../../modules/errors';
+import { LiqualityError } from '../../modules/error-parser';
 
 export function isTransactionNotFoundError(error: Error): boolean {
   if (error instanceof LiqualityError) {

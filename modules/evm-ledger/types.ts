@@ -1,4 +1,4 @@
-import { CreateOptions } from '@chainify/hw-ledger';
+import { CreateOptions } from '../hw-ledger';
 import { Address } from '../types';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';
 

@@ -1,4 +1,4 @@
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
+import { CUSTOM_ERRORS, createInternalError } from '../../../modules/error-parser';
 import { ActionContext, rootActionContext } from '..';
 import { Network, WalletId } from '../types';
 

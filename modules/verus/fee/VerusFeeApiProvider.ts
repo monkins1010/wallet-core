@@ -1,5 +1,5 @@
-import { Fee, HttpClient } from '@chainify/client';
-import { FeeDetails, FeeProvider } from '../types';
+import { Fee, HttpClient } from '../../client';
+import { FeeDetails, FeeProvider } from '../../types';
 
 export class VerusFeeApiProvider extends Fee implements FeeProvider {
     private _httpClient: HttpClient;

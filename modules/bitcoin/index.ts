@@ -6,9 +6,6 @@ export { BitcoinJsonRpcBaseProvider } from './chain/jsonRpc/BitcoinJsonRpcBasePr
 export { BitcoinJsonRpcProvider } from './chain/jsonRpc/BitcoinJsonRpcProvider';
 export { BitcoinFeeApiProvider } from './fee/BitcoinFeeApiProvider';
 export { BitcoinNetworks } from './networks';
-export { BitcoinSwapBaseProvider } from './swap/BitcoinSwapBaseProvider';
-export { BitcoinSwapEsploraProvider } from './swap/BitcoinSwapEsploraProvider';
-export { BitcoinSwapRpcProvider } from './swap/BitcoinSwapRpcProvider';
 export * as BitcoinTypes from './types';
 export * as BitcoinUtils from './utils';
 export { BitcoinBaseWalletProvider } from './wallet/BitcoinBaseWallet';

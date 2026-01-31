@@ -1,5 +1,5 @@
-import { Fee, HttpClient } from '@chainify/client';
-import { FeeDetails, FeeProvider } from '../types';
+import { Fee, HttpClient } from '../../../modules/client';
+import { FeeDetails, FeeProvider } from '../../types';
 
 export class BitcoinFeeApiProvider extends Fee implements FeeProvider {
     private _httpClient: HttpClient;

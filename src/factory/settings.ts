@@ -1,4 +1,4 @@
-import { ChainId, getChain } from '@liquality/cryptoassets';
+import { ChainId, getChain } from '../../modules/cryptoassets';
 import { ChainNetworks } from '../utils/networks';
 import buildConfig from '../build.config';
 import { Network } from '../store/types';
@@ -10,7 +10,7 @@ export const defaultChainSettings: Record<Network, Record<ChainId, ChainifyNetwo
       const chain = getChain(currNetwork, currChain);
       const { network } = chain;
       const { name, coinType, isTestnet, rpcUrls } = network;
-      const chainNetwork = ChainNetworks[currChain] ? ChainNetworks[currChain][currNetwork] : {} || {};
+      const chainNetwork = ChainNetworks[currChain] ? ChainNetworks[currChain][currNetwork] : {};
       let chainifyNetwork: any = {
         name,
         coinType,
@@ -26,7 +26,7 @@ export const defaultChainSettings: Record<Network, Record<ChainId, ChainifyNetwo
           ...chainifyNetwork,
           scraperUrl: buildConfig.exploraApis[currNetwork],
           batchScraperUrl: buildConfig.batchEsploraApis[currNetwork],
-          feeProviderUrl: 'https://liquality.io/swap/mempool/v1/fees/recommended',
+          feeProviderUrl: 'https://mempool.space/api/v1/fees/recommended',
         };
       }
       return {

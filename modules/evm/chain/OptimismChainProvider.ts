@@ -1,4 +1,4 @@
-import { BigNumber, FeeDetails, Network } from '../types';
+import { BigNumber, FeeDetails, Network } from '../../types';
 import { L2Provider } from '@eth-optimism/sdk';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 import { FeeOptions } from '../types';

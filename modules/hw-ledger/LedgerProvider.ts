@@ -1,7 +1,7 @@
 import { WalletError } from '../errors';
-import { Logger } from '@chainify/logger';
+import { Logger } from '../logger';
 import { Address, Network } from '../types';
-import { compare } from '@chainify/utils';
+import { compare } from '../utils';
 import HwAppBitcoin from '@ledgerhq/hw-app-btc';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';
 import Transport from '@ledgerhq/hw-transport';

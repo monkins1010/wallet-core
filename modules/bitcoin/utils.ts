@@ -1,6 +1,6 @@
 import { InvalidAddressError } from '../errors';
 import { AddressType, BigNumber, Transaction, TxStatus } from '../types';
-import * as varuint from 'bip174/src/lib/converter/varint';
+import * as varuint from 'varuint-bitcoin';
 import * as bitcoin from 'bitcoinjs-lib';
 import * as classify from 'bitcoinjs-lib/src/classify';
 import coinselect from 'coinselect';

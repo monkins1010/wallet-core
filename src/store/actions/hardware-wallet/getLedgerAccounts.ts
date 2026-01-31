@@ -1,5 +1,5 @@
 //import { BitcoinLedgerProvider } from '../modules/bitcoin-ledger';
-import { ChainId, getAllAssets, getChain } from '@liquality/cryptoassets';
+import { ChainId, getAllAssets, getChain } from '../../../../modules/cryptoassets';
 import BN from 'bignumber.js';
 import { ActionContext, rootActionContext } from '../..';
 import { getDerivationPath } from '../../../utils/derivationPath';

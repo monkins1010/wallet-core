@@ -1,7 +1,7 @@
-import { UnsupportedMethodError } from '../modules/errors';
-import { Nullable, TokenDetails } from '../modules/types';
-import { ChainId } from '@liquality/cryptoassets';
-import { LiqualityError } from '@liquality/error-parser';
+import { UnsupportedMethodError } from '../../../modules/errors';
+import { Nullable, TokenDetails } from '../../../modules/types';
+import { ChainId } from '../../../modules/cryptoassets';
+import { LiqualityError } from '../../../modules/error-parser';
 import { ActionContext, rootActionContext } from '..';
 import { Network, WalletId } from '../types';
 

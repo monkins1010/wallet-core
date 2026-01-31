@@ -1,6 +1,6 @@
-import { Nft, Wallet } from '@chainify/client';
-import { UnsupportedMethodError } from '../errors';
-import { AddressType, AssetTypes, BigNumber, ChainId, NFTAsset, Transaction } from '../types';
+import { Nft, Wallet } from '../../client';
+import { UnsupportedMethodError } from '../../errors';
+import { AddressType, AssetTypes, BigNumber, ChainId, NFTAsset, Transaction } from '../../types';
 import { BaseProvider } from '@ethersproject/providers';
 import { SolanaWalletProvider } from '../wallet/SolanaWalletProvider';
 

@@ -6,4 +6,4 @@ export { getErrorParser } from './factory';
 export * from './parsers';
 export { reportLiqualityError, updateErrorReporterConfig } from './reporters';
 export { ERROR_NAMES } from './config';
-export { LiqualityErrorJSON } from './types';
+export type { LiqualityErrorJSON } from './types';

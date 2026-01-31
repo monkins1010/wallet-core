@@ -1,4 +1,4 @@
-import { ChainId } from '@liquality/cryptoassets';
+import { ChainId } from '../../../modules/cryptoassets';
 import { Account } from '../types';
 
 export const rskFishToken = {

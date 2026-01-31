@@ -1,4 +1,4 @@
-import { Chain, Wallet } from '@chainify/client';
+import { Chain, Wallet } from '../../client';
 import { selectCoins, normalizeTransactionObject, decodeRawTransaction, CoinSelectTarget } from '../utils'
 import {
   AddressTxCounts,
@@ -13,11 +13,11 @@ import {
   UTXO,
 } from '../types';
 
-import { Transaction, Address, BigNumber, TransactionRequest, AddressType, Asset } from '../types'
-import { asyncSetImmediate } from '@chainify/utils'
+import { Transaction, Address, BigNumber, TransactionRequest, AddressType, Asset } from '../../types'
+import { asyncSetImmediate } from '../../utils'
 import { VerusBaseChainProvider } from '../chain/VerusBaseChainProvider';
-import { InsufficientBalanceError } from '../errors'
-import { BIP32Interface } from 'bitcoinjs-lib'
+import { InsufficientBalanceError } from '../../errors'
+import { BIP32Interface } from '../../bitcoin/crypto'
 import memoize from 'memoizee'
 import OPS from 'bitcoin-ops'
 
@@ -188,8 +188,9 @@ export abstract class VerusBaseWalletProvider<T extends VerusBaseChainProvider =
     throw new Error('Wallet does not contain address');
   }
 
-  getAddressFromPublicKey(publicKey: Buffer) {
-    return bitgo.ECPair.fromPublicKeyBuffer(publicKey, bitgo.networks[this._network.name]).getAddress()
+  getAddressFromPublicKey(publicKey: Buffer | Uint8Array) {
+    const pubkeyBuffer = Buffer.from(publicKey);
+    return bitgo.ECPair.fromPublicKeyBuffer(pubkeyBuffer, bitgo.networks[this._network.name]).getAddress()
   }
 
   protected async getDerivationPathAddress(path: string) {
@@ -203,7 +204,7 @@ export abstract class VerusBaseWalletProvider<T extends VerusBaseChainProvider =
     const address = this.getAddressFromPublicKey(publicKey)
     const addressObject = new Address({
       address,
-      publicKey: publicKey.toString('hex'),
+      publicKey: Buffer.from(publicKey).toString('hex'),
       derivationPath: path
     })
 

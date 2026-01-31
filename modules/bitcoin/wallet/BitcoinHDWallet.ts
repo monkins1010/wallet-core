@@ -1,8 +1,8 @@
-import { Chain } from '@chainify/client';
-import { AddressType, Asset, BigNumber } from '../types';
-import { BIP32Interface, fromSeed } from 'bip32';
+import { Chain } from '../../client';
+import { AddressType, Asset, BigNumber } from '../../types';
+import { bip32, ECPair, BIP32Interface, ECPairInterface, validator } from '../crypto';
 import { mnemonicToSeed } from 'bip39';
-import { ECPair, ECPairInterface, Psbt, script, Transaction as BitcoinJsTransaction } from 'bitcoinjs-lib';
+import { Psbt, script, Transaction as BitcoinJsTransaction } from 'bitcoinjs-lib';
 import { signAsync as signBitcoinMessage } from 'bitcoinjs-message';
 import { BitcoinBaseChainProvider } from '../chain/BitcoinBaseChainProvider';
 import { AddressType as BitcoinAddressType, BitcoinHDWalletProviderOptions, Input, OutputTarget, PsbtInputTarget } from '../types';
@@ -133,7 +133,7 @@ export class BitcoinHDWalletProvider extends BitcoinBaseWalletProvider implement
             const wallet = await this.getWalletAddress(inputs[i].address);
             const keyPair = await this.keyPair(wallet.derivationPath);
             psbt.signInput(i, keyPair);
-            psbt.validateSignaturesOfInput(i);
+            psbt.validateSignaturesOfInput(i, validator);
         }
 
         psbt.finalizeAllInputs();
@@ -215,7 +215,7 @@ export class BitcoinHDWalletProvider extends BitcoinBaseWalletProvider implement
         }
 
         const seed = await mnemonicToSeed(this._mnemonic);
-        this._seedNode = fromSeed(seed, this._network);
+        this._seedNode = bip32.fromSeed(Buffer.from(seed), this._network);
 
         return this._seedNode;
     }

@@ -1,6 +1,6 @@
-import { NodeError } from '../errors';
-import { FeeDetails } from '../types';
-import { Math } from '@chainify/utils';
+import { NodeError } from '../../../errors';
+import { FeeDetails } from '../../../types';
+import { Math } from '../../../utils';
 
 export class PolygonFeeParser {
     public parse(response: PolygonResponse): FeeDetails {
@@ -31,7 +31,7 @@ export class PolygonFeeParser {
                 },
             };
         } else {
-            throw new NodeError('Could not fetch Polygon fee data', response);
+            throw new NodeError('Could not fetch Polygon fee data', response as unknown as Record<string, unknown>);
         }
     }
 }

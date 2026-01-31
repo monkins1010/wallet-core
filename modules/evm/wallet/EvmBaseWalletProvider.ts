@@ -1,7 +1,7 @@
-import { Chain, Wallet } from '@chainify/client';
-import { NodeError, ReplaceFeeInsufficientError } from '../errors';
-import { AddressType, Asset, AssetTypes, BigNumber, FeeType, NamingProvider, Network, Transaction } from '../types';
-import { ensure0x, remove0x } from '@chainify/utils';
+import { Chain, Wallet } from '../../client';
+import { NodeError, ReplaceFeeInsufficientError } from '../../errors';
+import { AddressType, Asset, AssetTypes, BigNumber, FeeType, NamingProvider, Network, Transaction } from '../../types';
+import { ensure0x, remove0x } from '../../utils';
 import { Signer } from '@ethersproject/abstract-signer';
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
 import { BaseProvider, TransactionRequest as EthersTxRequest } from '@ethersproject/providers';

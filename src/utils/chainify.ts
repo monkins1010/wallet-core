@@ -1,5 +1,5 @@
-import { Asset as ChainifyAsset } from '../modules/types';
-import { ChainId, IAsset } from '@liquality/cryptoassets';
+import { Asset as ChainifyAsset } from '../../modules/types';
+import { ChainId, IAsset } from '../../modules/cryptoassets';
 import cryptoassets from './cryptoassets';
 
 export function assetsAdapter(assets: string | string[]): ChainifyAsset[] {

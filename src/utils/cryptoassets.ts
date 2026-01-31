@@ -1,4 +1,4 @@
-import { IAsset } from '@liquality/cryptoassets';
+import { IAsset } from '../../modules/cryptoassets';
 import type { OriginalStore } from '../store';
 
 // Redefine the `cryptoassets` lib to pull from the getter - to include custom tokens

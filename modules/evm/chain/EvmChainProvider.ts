@@ -1,8 +1,8 @@
-import { Chain, Fee } from '@chainify/client';
-import { BlockNotFoundError, NodeError, TxNotFoundError, UnsupportedMethodError } from '../errors';
-import { Logger } from '@chainify/logger';
-import { AddressType, Asset, AssetTypes, BigNumber, Block, FeeDetails, Network, TokenDetails, Transaction } from '../types';
-import { ensure0x } from '@chainify/utils';
+import { Chain, Fee } from '../../client';
+import { BlockNotFoundError, NodeError, TxNotFoundError, UnsupportedMethodError } from '../../errors';
+import { Logger } from '../../logger';
+import { AddressType, Asset, AssetTypes, BigNumber, Block, FeeDetails, Network, TokenDetails, Transaction } from '../../types';
+import { ensure0x } from '../../utils';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 import { RpcFeeProvider } from '../fee/RpcFeeProvider';
 import { ERC20__factory } from '../typechain';
@@ -210,16 +210,17 @@ export class EvmChainProvider extends Chain<StaticJsonRpcProvider> {
     }
 
     private async _getBlock(blockTag: number | string, includeTx?: boolean) {
+        const blockIdentifier = typeof blockTag === 'number' ? blockTag : blockTag;
         if (includeTx) {
-            const blockWithTx = await this.provider.getBlockWithTransactions(blockTag);
+            const blockWithTx = await this.provider.getBlockWithTransactions(blockIdentifier as any);
             if (!blockWithTx) {
-                throw new BlockNotFoundError(blockTag);
+                throw new BlockNotFoundError(String(blockTag));
             }
             return parseBlockResponse(blockWithTx, blockWithTx.transactions);
         } else {
-            const block = await this.provider.getBlock(blockTag);
+            const block = await this.provider.getBlock(blockIdentifier as any);
             if (!block) {
-                throw new BlockNotFoundError(blockTag);
+                throw new BlockNotFoundError(String(blockTag));
             }
             return parseBlockResponse(block);
         }

@@ -1,6 +1,6 @@
-import { Chain } from '@chainify/client';
-import { AddressType, Asset, BigNumber } from '../types';
-import { BIP32Interface, fromSeed } from 'bip32';
+import { Chain } from '../../client';
+import { Asset, BigNumber, AddressType } from '../../types';
+import { bip32, BIP32Interface } from '../../bitcoin/crypto';
 import { mnemonicToSeed } from 'bip39';
 import { Psbt, Transaction as VerusJsTransaction } from 'bitcoinjs-lib';
 import { VerusBaseChainProvider } from '../chain/VerusBaseChainProvider';
@@ -207,7 +207,7 @@ export class VerusHDWalletProvider extends VerusBaseWalletProvider implements IV
         }
 
         const seed = await mnemonicToSeed(this._mnemonic);
-        this._seedNode = fromSeed(seed);
+        this._seedNode = bip32.fromSeed(Buffer.from(seed));
 
         return this._seedNode;
     }

@@ -1,4 +1,4 @@
-import { getChain } from '@liquality/cryptoassets';
+import { getChain } from '../../../modules/cryptoassets';
 import BN from 'bignumber.js';
 import { v4 as uuidv4 } from 'uuid';
 import { ActionContext, rootActionContext } from '..';

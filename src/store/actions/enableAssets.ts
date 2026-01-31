@@ -1,4 +1,4 @@
-import { ChainId, getChain } from '@liquality/cryptoassets';
+import { ChainId, getChain } from '../../../modules/cryptoassets';
 import { ActionContext, rootActionContext } from '..';
 import { accountCreator, getNextAccountColor } from '../../utils/accounts';
 import { AccountType, Asset, Network, WalletId } from '../types';
@@ -62,5 +62,4 @@ export const enableAssets = async (
   });
   dispatch.updateCurrenciesInfo({ assets: [...getters.allNetworkAssets] });
   dispatch.updateFiatRates({ assets: [...getters.allNetworkAssets] });
-  dispatch.updateMarketData({ network });
 };

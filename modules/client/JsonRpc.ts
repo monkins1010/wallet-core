@@ -1,4 +1,4 @@
-import { Logger } from '@chainify/logger';
+import { Logger } from '../logger';
 import { AxiosRequestConfig } from 'axios';
 import HttpClient from './Http';
 

@@ -1,28 +1,28 @@
-import { Chain, Client, Swap, Wallet } from '../modules/client';
+import { Chain, Client, Wallet } from '../../../modules/client';
 import {
   EIP1559FeeProvider,
   EvmChainProvider,
   EvmWalletProvider,
   OptimismChainProvider,
   RpcFeeProvider,
-} from '../modules/evm';
-import { EvmLedgerProvider, CreateEvmLedgerApp } from '../modules/evm-ledger';
-import { Address, Network } from '../modules/types';
+} from '../../../modules/evm';
+import { EvmLedgerProvider, CreateEvmLedgerApp } from '../../../modules/evm-ledger';
+import { Address, Network } from '../../../modules/types';
 import { ChainifyNetwork } from '../../types';
 import { JsonRpcProvider, StaticJsonRpcProvider } from '@ethersproject/providers';
 import { AccountInfo, AccountType, ClientSettings } from '../../store/types';
 import { walletOptionsStore } from '../../walletOptions';
 import { getNftProvider } from './nft';
-import { EvmChain } from '@liquality/cryptoassets';
+import { EvmChain } from '../../../modules/cryptoassets';
 import { asL2Provider } from '@eth-optimism/sdk';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
+import { CUSTOM_ERRORS, createInternalError } from '../../../modules/error-parser';
 
 export function createEvmClient(
   chain: EvmChain,
   settings: ClientSettings<ChainifyNetwork>,
   mnemonic: string,
   accountInfo: AccountInfo
-): Client<Chain<any, Network>, Wallet<any, any>, Swap<any, any, Wallet<any, any>>> {
+): Client<Chain<any, Network>, Wallet<any, any>> {
   const chainProvider = getEvmProvider(chain, settings);
   const walletProvider = getEvmWalletProvider(settings.chainifyNetwork, accountInfo, chainProvider, mnemonic);
   const client = new Client().connect(walletProvider);

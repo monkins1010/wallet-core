@@ -1,6 +1,6 @@
-import { Nft } from '@chainify/client';
-import { UnsupportedMethodError } from '../errors';
-import { AddressType, BigNumber, FeeType, NFTAsset, Transaction } from '../types';
+import { Nft } from '../../client';
+import { UnsupportedMethodError } from '../../errors';
+import { AddressType, BigNumber, FeeType, NFTAsset, Transaction } from '../../types';
 import { Signer } from '@ethersproject/abstract-signer';
 import { AddressZero } from '@ethersproject/constants';
 import { BaseProvider } from '@ethersproject/providers';

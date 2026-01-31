@@ -5,7 +5,6 @@ import { rskLegacyDerivationPath, rskLegacyDerivationPathFix } from './11_12_rsk
 import { rskFishToken } from './13_rsk_fish_token';
 import { accountSetDerivationPath } from './14_account_set_derivation_path';
 import { accountsChainsSetEnabled } from './15_accounts_chains_set_enabled';
-import { enableTerraChain } from './16_enable_terra_chain';
 import { removeInjectionEnabled } from './17_remove_injection_enabled';
 import { enableAvalancheChain } from './18_enable_avalanche_chain';
 import { removeExistingLedgerAccounts } from './19_remove_existing_ledger_accounts';
@@ -20,7 +19,6 @@ import { addNetworkCustomTokens } from './3_add_network_custom_tokens';
 import { fixRSKTokenInjectedAsset } from './4_fix_rsk_token_injected_asset';
 import { multipleAccountSupport } from './5_multiple_account_support';
 import { useLedgerLiveDefault } from './6_use_ledger_live_default';
-import { multiProviderSwaps } from './7_multi_provider_swaps';
 import { removeUseLedgerLive } from './8_remove_use_ledger_live';
 import { injectEthereumAssetChain } from './9_inject_ethereum_asset_chain';
 
@@ -31,7 +29,7 @@ const migrations = [
   fixRSKTokenInjectedAsset, // v4
   multipleAccountSupport, // v5,
   useLedgerLiveDefault, // v6
-  multiProviderSwaps, // v7
+  // v7 (multiProviderSwaps) removed
   removeUseLedgerLive, // v8
   injectEthereumAssetChain, // v9
   analitycsSettings, // v10
@@ -40,7 +38,7 @@ const migrations = [
   rskFishToken, // v13
   accountSetDerivationPath, // v14
   accountsChainsSetEnabled, // v15
-  enableTerraChain, // v16
+  // v16 (enableTerraChain) removed
   removeInjectionEnabled, // v17
   enableAvalancheChain, // v18
   removeExistingLedgerAccounts, // v19

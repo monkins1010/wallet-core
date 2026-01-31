@@ -1,4 +1,4 @@
-import { ChainId, getChain } from '@liquality/cryptoassets';
+import { ChainId, getChain } from '../../modules/cryptoassets';
 import { Network } from '../store/types';
 
 export const CHAINS_WITH_FETCH_TOKEN_DETAILS = Object.values(ChainId).reduce((result: Array<any>, chainId: ChainId) => {

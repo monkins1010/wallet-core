@@ -1,29 +1,25 @@
-import { Chain, Client, Swap, Wallet } from '../modules/client';
+import { Chain, Client, Wallet } from '../../../modules/client';
 import {
   BitcoinEsploraApiProvider,
   BitcoinFeeApiProvider,
   BitcoinHDWalletProvider,
-  BitcoinSwapEsploraProvider,
   BitcoinTypes,
-} from '../modules/bitcoin';
-import { BitcoinLedgerProvider, CreateBitcoinLedgerApp } from '../modules/bitcoin-ledger';
-import { VerusJsonRpcProvider, VerusHDWalletProvider, VerusTypes } from '../modules/verus';
+} from '../../../modules/bitcoin';
+import { VerusJsonRpcProvider, VerusHDWalletProvider, VerusTypes } from '../../../modules/verus';
 import { ChainifyNetwork } from '../../types';
-import { NearChainProvider, NearSwapProvider, NearTypes, NearWalletProvider } from '../modules/near';
-import { SolanaChainProvider, SolanaNftProvider, SolanaWalletProvider } from '../modules/solana';
-import { TerraChainProvider, TerraSwapProvider, TerraTypes, TerraWalletProvider } from '../modules/terra';
+
+import { SolanaChainProvider, SolanaNftProvider, SolanaWalletProvider } from '../../../modules/solana';
 
 import { AccountInfo, ClientSettings } from '../../store/types';
-import { LEDGER_BITCOIN_OPTIONS } from '../../utils/ledger';
 import { walletOptionsStore } from '../../walletOptions';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
-import { Network } from '../modules/types';
+import { CUSTOM_ERRORS, createInternalError } from '../../../modules/error-parser';
+import { Network } from '../../../modules/types';
 
 export function createBtcClient(
   settings: ClientSettings<ChainifyNetwork>,
   mnemonic: string,
   accountInfo: AccountInfo
-): Client<Chain<any, Network>, Wallet<any, any>, Swap<any, any, Wallet<any, any>>> {
+): Client<Chain<any, Network>, Wallet<any, any>> {
   const isMainnet = settings.network === 'mainnet';
   const { chainifyNetwork } = settings;
   const chainProvider = new BitcoinEsploraApiProvider({
@@ -38,81 +34,21 @@ export function createBtcClient(
     chainProvider.setFeeProvider(feeProvider);
   }
 
-  const swapProvider = new BitcoinSwapEsploraProvider({
-    network: chainifyNetwork as BitcoinTypes.BitcoinNetwork,
-    scraperUrl: chainifyNetwork.scraperUrl,
-  });
-
-  // TODO: make sure Ledger works
-  if (accountInfo.type.includes('bitcoin_ledger')) {
-    const option = LEDGER_BITCOIN_OPTIONS.find((o) => o.name === accountInfo.type);
-    if (!option) {
-      throw createInternalError(CUSTOM_ERRORS.NotFound.AccountTypeOption(accountInfo.type));
-    }
-    const { addressType } = option;
-    if (!walletOptionsStore.walletOptions.ledgerTransportCreator) {
-      throw createInternalError(CUSTOM_ERRORS.NotFound.LedgerTransportCreator);
-    }
-    const ledgerProvider = new BitcoinLedgerProvider(
-      {
-        network: chainifyNetwork as BitcoinTypes.BitcoinNetwork,
-        addressType,
-        baseDerivationPath: accountInfo.derivationPath,
-        basePublicKey: accountInfo?.publicKey,
-        baseChainCode: accountInfo?.chainCode,
-        transportCreator: walletOptionsStore.walletOptions.ledgerTransportCreator,
-        createLedgerApp: CreateBitcoinLedgerApp,
-      },
-      chainProvider as any
-    );
-    swapProvider.setWallet(ledgerProvider as any);
-  } else {
-    const walletOptions = {
-      network: chainifyNetwork as BitcoinTypes.BitcoinNetwork,
-      baseDerivationPath: accountInfo.derivationPath,
-      mnemonic,
-    };
-    const walletProvider = new BitcoinHDWalletProvider(walletOptions, chainProvider);
-    swapProvider.setWallet(walletProvider);
-  }
-
-  return new Client().connect(swapProvider);
-}
-
-export function createNearClient(
-  settings: ClientSettings<NearTypes.NearNetwork>,
-  mnemonic: string,
-  accountInfo: AccountInfo
-): Client<Chain<any, Network>, Wallet<any, any>, Swap<any, any, Wallet<any, any>>> {
   const walletOptions = {
+    network: chainifyNetwork as BitcoinTypes.BitcoinNetwork,
+    baseDerivationPath: accountInfo.derivationPath,
     mnemonic,
-    derivationPath: accountInfo.derivationPath,
-    helperUrl: settings.chainifyNetwork.helperUrl,
   };
-  const chainProvider = new NearChainProvider(settings.chainifyNetwork);
-  const walletProvider = new NearWalletProvider(walletOptions, chainProvider);
-  const swapProvider = new NearSwapProvider(settings.chainifyNetwork.helperUrl, walletProvider);
-  return new Client(chainProvider as any, walletProvider as any).connect(swapProvider as any);
-}
+  const walletProvider = new BitcoinHDWalletProvider(walletOptions, chainProvider);
 
-export function createTerraClient(
-  settings: ClientSettings<TerraTypes.TerraNetwork>,
-  mnemonic: string,
-  accountInfo: AccountInfo
-): Client<Chain<any, Network>, Wallet<any, any>, Swap<any, any, Wallet<any, any>>> {
-  const { helperUrl } = settings.chainifyNetwork;
-  const walletOptions = { mnemonic, derivationPath: accountInfo.derivationPath, helperUrl };
-  const chainProvider = new TerraChainProvider(settings.chainifyNetwork);
-  const walletProvider = new TerraWalletProvider(walletOptions, chainProvider);
-  const swapProvider = new TerraSwapProvider(helperUrl, walletProvider);
-  return new Client(chainProvider as any, walletProvider as any).connect(swapProvider as any);
+  return new Client(chainProvider as any, walletProvider);
 }
 
 export function createSolanaClient(
   settings: ClientSettings<ChainifyNetwork>,
   mnemonic: string,
   accountInfo: AccountInfo
-): Client<Chain<any, Network>, Wallet<any, any>, Swap<any, any, Wallet<any, any>>> {
+): Client<Chain<any, Network>, Wallet<any, any>> {
   const walletOptions = { mnemonic, derivationPath: accountInfo.derivationPath };
   const chainProvider = new SolanaChainProvider(settings.chainifyNetwork);
   const walletProvider = new SolanaWalletProvider(walletOptions, chainProvider);
@@ -125,7 +61,7 @@ export function createVerusClient(
   settings: ClientSettings<ChainifyNetwork>,
   mnemonic: string,
   accountInfo: AccountInfo
-): Client<Chain<any, Network>, Wallet<any, any>, Swap<any, any, Wallet<any, any>>> {
+): Client<Chain<any, Network>, Wallet<any, any>> {
   const { chainifyNetwork } = settings;
   const chainProvider = new VerusJsonRpcProvider({
     uri: chainifyNetwork.rpcUrl as string,

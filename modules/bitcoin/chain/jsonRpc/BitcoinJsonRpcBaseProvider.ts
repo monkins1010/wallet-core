@@ -1,5 +1,5 @@
-import { JsonRpcProvider } from '@chainify/client';
-import { AddressType, BigNumber, Transaction } from '../types';
+import { JsonRpcProvider } from '../../../client';
+import { AddressType, BigNumber, Transaction } from '../../../types';
 import { AddressTxCounts, UTXO as BitcoinUTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
 import { BitcoinBaseChainProvider } from '../BitcoinBaseChainProvider';

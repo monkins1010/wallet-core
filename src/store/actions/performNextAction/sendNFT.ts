@@ -1,4 +1,4 @@
-import { TxStatus } from '../modules/types';
+import { TxStatus } from '../../../../modules/types';
 import { isTransactionNotFoundError } from '../../../utils/isTransactionNotFoundError';
 import { ActionContext, rootActionContext } from '../..';
 import { Network, NFTSendHistoryItem, SendStatus, WalletId } from '../../types';

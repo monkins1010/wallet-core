@@ -1,15 +1,15 @@
-import { BitcoinBaseWalletProvider, BitcoinEsploraApiProvider } from '../modules/bitcoin';
-import { Client } from '../modules/client';
-import { EvmUtils } from '../modules/evm';
-import { ChainId, EIP1559Fee, FeeDetail, FeeDetails, FeeType } from '../modules/types';
+import { BitcoinBaseWalletProvider, BitcoinEsploraApiProvider } from '../../modules/bitcoin';
+import { Client } from '../../modules/client';
+import { EvmUtils } from '../../modules/evm';
+import { ChainId, EIP1559Fee, FeeDetail, FeeDetails, FeeType } from '../../modules/types';
 import {
   currencyToUnit,
   getAssetSendGasLimit,
   getAssetSendL1GasLimit,
   getNativeAssetCode,
   unitToCurrency,
-} from '@liquality/cryptoassets';
-import { CUSTOM_ERRORS, createInternalError } from '@liquality/error-parser';
+} from '../../modules/cryptoassets';
+import { CUSTOM_ERRORS, createInternalError } from '../../modules/error-parser';
 import BN from 'bignumber.js';
 import store from '../store';
 import { Account, AccountId, Asset, Network, NFT } from '../store/types';
@@ -86,7 +86,7 @@ function getSendFee(asset: Asset, feePrice: number, l1FeePrice?: number, network
 function getTxFee(units: FeeUnits, _asset: Asset, _feePrice: number) {
   const chainId = cryptoassets[_asset].chain;
   const asset = isERC20(_asset) ? 'ERC20' : _asset;
-  const feeUnits = chainId === 'terra' ? units['LUNA'] : units[asset]; // Terra ERC20 assets use gas equal to Terra Native assets
+  const feeUnits = units[asset];
   const fee = new BN(feeUnits).times(feePriceInUnit(_asset, _feePrice));
 
   return unitToCurrency(cryptoassets[getNativeAsset(_asset)], fee);

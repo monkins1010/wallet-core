@@ -1,7 +1,7 @@
-import { Chain, Wallet } from '@chainify/client';
-import { InsufficientBalanceError } from '../errors';
-import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest } from '../types';
-import { asyncSetImmediate } from '@chainify/utils';
+import { Chain, Wallet } from '../../client';
+import { InsufficientBalanceError } from '../../errors';
+import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest } from '../../types';
+import { asyncSetImmediate } from '../../utils';
 import { BIP32Interface } from 'bip32';
 import { payments, script } from 'bitcoinjs-lib';
 import memoize from 'memoizee';
@@ -204,7 +204,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         const address = this.getAddressFromPublicKey(publicKey);
         const addressObject = new Address({
             address,
-            publicKey: publicKey.toString('hex'),
+            publicKey: Buffer.from(publicKey).toString('hex'),
             derivationPath: path,
         });
 
@@ -463,20 +463,21 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         return targets;
     }
 
-    protected getAddressFromPublicKey(publicKey: Buffer) {
+    protected getAddressFromPublicKey(publicKey: Buffer | Uint8Array) {
         return this.getPaymentVariantFromPublicKey(publicKey).address;
     }
 
-    protected getPaymentVariantFromPublicKey(publicKey: Buffer) {
+    protected getPaymentVariantFromPublicKey(publicKey: Buffer | Uint8Array) {
+        const pubkeyBuffer = Buffer.from(publicKey);
         if (this._addressType === BtcAddressType.LEGACY) {
-            return payments.p2pkh({ pubkey: publicKey, network: this._network });
+            return payments.p2pkh({ pubkey: pubkeyBuffer, network: this._network });
         } else if (this._addressType === BtcAddressType.P2SH_SEGWIT) {
             return payments.p2sh({
-                redeem: payments.p2wpkh({ pubkey: publicKey, network: this._network }),
+                redeem: payments.p2wpkh({ pubkey: pubkeyBuffer, network: this._network }),
                 network: this._network,
             });
         } else if (this._addressType === BtcAddressType.BECH32) {
-            return payments.p2wpkh({ pubkey: publicKey, network: this._network });
+            return payments.p2wpkh({ pubkey: pubkeyBuffer, network: this._network });
         }
     }
 }

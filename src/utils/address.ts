@@ -1,4 +1,4 @@
-import { BitcoinTypes } from '../modules/bitcoin';
+import { BitcoinTypes } from '../../modules/bitcoin';
 
 export function shortenAddress(address: string) {
   const prefix = address.startsWith('0x') ? '0x' : '';

@@ -1,6 +1,6 @@
-import { Chain, Fee, JsonRpcProvider } from '@chainify/client';
-import { BlockNotFoundError, TxNotFoundError } from '../errors';
-import { AddressType, Asset, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '../types';
+import { Chain, Fee, JsonRpcProvider } from '../../../client';
+import { BlockNotFoundError, TxNotFoundError } from '../../../errors';
+import { AddressType, Asset, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '../../../types';
 import { flatten } from 'lodash';
 import { Transaction as BitcoinTransaction } from '../../types';
 import { normalizeTransactionObject } from '../../utils';

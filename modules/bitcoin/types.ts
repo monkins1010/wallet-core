@@ -3,7 +3,6 @@ import { Network as BitcoinJsLibNetwork } from 'bitcoinjs-lib';
 
 export * as BitcoinEsploraTypes from './chain/esplora/types';
 export * as BitcoinJsonRpcTypes from './chain/jsonRpc/types';
-export * from './swap/types';
 
 export interface BitcoinNetwork extends Network, BitcoinJsLibNetwork {}
 

@@ -1,4 +1,4 @@
-import { sleep } from '../modules/utils';
+import { sleep } from '../../../modules/utils';
 import BigNumber from 'bignumber.js';
 import Bluebird from 'bluebird';
 import { v4 as uuidv4 } from 'uuid';

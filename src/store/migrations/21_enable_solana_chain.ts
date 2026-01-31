@@ -1,4 +1,4 @@
-import { ChainId } from '@liquality/cryptoassets';
+import { ChainId } from '../../../modules/cryptoassets';
 import { enableChain } from './enable_chain';
 
 export const enableSolanaChain = {

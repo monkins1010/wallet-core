@@ -1,38 +1,11 @@
-import BigNumber from 'bignumber.js'
-import {
-  assets,
-  testnetAssets,
-  chainToTokenAddressMap,
-  chainToTestnetTokenAddressMap,
-  getSendGasLimitERC20
-} from './assets'
-import { chains, isEthereumChain } from './chains'
-import { dappChains } from './dapps'
-import { Asset, AssetType, AssetTypes, ChainId } from './types'
+export { EvmChain } from './chains/EvmChain';
+export { BaseChain } from './chains/BaseChain';
 
-function unitToCurrency(asset: Asset, value: number | BigNumber): BigNumber {
-  const multiplier = new BigNumber(10).pow(asset.decimals)
-  return new BigNumber(value).dividedBy(multiplier)
-}
-
-function currencyToUnit(asset: Asset, value: number | BigNumber): BigNumber {
-  const multiplier = new BigNumber(10).pow(asset.decimals)
-  return new BigNumber(value).times(multiplier)
-}
-
-export {
-  assets,
-  chainToTokenAddressMap,
-  testnetAssets,
-  chainToTestnetTokenAddressMap,
-  getSendGasLimitERC20,
-  chains,
-  dappChains,
-  isEthereumChain,
-  unitToCurrency,
-  currencyToUnit,
-  Asset,
-  AssetType,
-  AssetTypes,
-  ChainId
-}
+export * from './assets';
+export * from './chains';
+export { dappChains } from './dapps';
+export type { IAsset } from './interfaces/IAsset';
+export type { IChain } from './interfaces/IChain';
+export type { AssetType } from './types';
+export { AssetTypes, ChainId } from './types';
+export { currencyToUnit, unitToCurrency } from './utils';

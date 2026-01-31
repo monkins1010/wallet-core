@@ -4,8 +4,7 @@ import Fee from './Fee';
 import HttpClient from './Http';
 import JsonRpcProvider from './JsonRpc';
 import Nft from './Nft';
-import Swap from './Swap';
 import Wallet from './Wallet';
 
 export * as ClientTypes from './types';
-export { Client, Chain, Fee, Wallet, Swap, Nft, HttpClient, JsonRpcProvider };
+export { Client, Chain, Fee, Wallet, Nft, HttpClient, JsonRpcProvider };

@@ -1,5 +1,5 @@
-import { HttpClient } from '@chainify/client';
-import { NFTAsset } from '../types';
+import { HttpClient } from '../../client';
+import { NFTAsset } from '../../types';
 import { BaseProvider } from '@ethersproject/providers';
 import { NftProviderConfig, NftTypes } from '../types';
 import { EvmBaseWalletProvider } from '../wallet/EvmBaseWalletProvider';

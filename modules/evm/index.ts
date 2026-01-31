@@ -10,8 +10,6 @@ export { CovalentNftProvider } from './nft/CovalentNftProvider';
 export { EvmNftProvider } from './nft/EvmNftProvider';
 export { InfuraNftProvider } from './nft/InfuraNftProvider';
 export { OpenSeaNftProvider } from './nft/OpenSeaNftProvider';
-export { EvmBaseSwapProvider } from './swap/EvmBaseSwapProvider';
-export { EvmSwapProvider } from './swap/EvmSwapProvider';
 export * as Typechain from './typechain';
 export * as EvmTypes from './types';
 export * as EvmUtils from './utils';
